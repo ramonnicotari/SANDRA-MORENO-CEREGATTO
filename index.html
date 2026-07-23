@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Relatório Genético — Sandra Moreno Ceregatto</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0d1b30">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Genética Sandra">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="icons/favicon-64.png">
+  <style>
+    :root{
+      --v:#22c55e; --vbg:#f0fdf4; --vb:#86efac;
+      --a:#f59e0b; --abg:#fffbeb; --ab:#fcd34d;
+      --r:#ef4444; --rbg:#fef2f2; --rb:#fca5a5;
+      --fundo:#f1f5f9; --card:#fff; --txt:#1e293b; --sub:#475569;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    .ri.active{outline:3px solid currentColor;transform:scale(1.05);box-shadow:0 4px 14px rgba(0,0,0,.18);}
+    .card.hidden{display:none!important;}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--fundo);color:var(--txt);padding:0 14px 0;line-height:1.55;}
+    .hdr{background:linear-gradient(135deg,#0d1b30,#1a3054);color:#fff;border-radius:0;padding:32px 30px 28px;margin:0 -14px 18px;box-shadow:0 4px 20px rgba(0,0,0,.35);}
+    .hdr h1{font-size:1.6rem;font-weight:800;margin-bottom:6px;}
+    .hdr p{opacity:.85;font-size:.92rem;}
+    .hdr-ramon{margin-top:8px;font-size:1.08rem;font-weight:700;opacity:1;}
+    .hdr-badges{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;}
+    .hdr-badge{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:3px 11px;font-size:.77rem;}
+    .bar-v{background:linear-gradient(90deg,#22c55e,#4ade80);}
+    .bar-a{background:linear-gradient(90deg,#f59e0b,#fbbf24);}
+    .bar-r{background:linear-gradient(90deg,#ef4444,#f87171);}
+    .aptidao{background:linear-gradient(135deg,#0f4c81,#1565c0);color:#fff;border-radius:16px;padding:22px 26px;margin-bottom:18px;box-shadow:0 6px 20px rgba(21,101,192,.35);}
+    .apt-title{font-size:1.05rem;font-weight:700;opacity:.9;margin-bottom:14px;letter-spacing:.04em;}
+    .apt-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+    .apt-item label{font-size:.75rem;opacity:.75;display:block;margin-bottom:5px;}
+    .apt-bar-bg{background:rgba(255,255,255,.18);border-radius:20px;height:20px;overflow:hidden;}
+    .apt-bar{height:100%;border-radius:20px;}
+    .apt-pct{font-size:1.5rem;font-weight:800;margin-top:5px;}
+    .apt-note{font-size:.73rem;opacity:.65;margin-top:12px;}
+    .nota{background:#fff;border-radius:14px;padding:14px 18px;margin-bottom:18px;border-left:5px solid #2563eb;box-shadow:0 2px 10px rgba(0,0,0,.06);font-size:.86rem;color:var(--sub);}
+    .nota strong{color:var(--txt);}
+    .leg{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px;background:#fff;border-radius:14px;padding:13px 18px;box-shadow:0 2px 10px rgba(0,0,0,.06);}
+    .leg h3{width:100%;font-size:.76rem;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;}
+    .li{display:flex;align-items:center;gap:7px;font-size:.84rem;font-weight:500;}
+    .dot{width:13px;height:13px;border-radius:50%;}
+    .dv{background:var(--v);}.da{background:var(--a);}.dr{background:var(--r);}
+    .res-wrap{background:#fff;border-radius:14px;padding:16px 20px;margin-bottom:22px;box-shadow:0 2px 10px rgba(0,0,0,.06);}
+    .res-wrap h2{font-size:.93rem;font-weight:700;margin-bottom:11px;}
+    .res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;}
+    .ri{border-radius:10px;padding:9px 8px;text-align:center;border:2px solid;cursor:pointer;text-decoration:none;display:block;transition:transform .15s,box-shadow .15s;}
+    .ri:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 6px 18px rgba(0,0,0,.13);}
+    .ri:active{transform:scale(.97);}
+    .ri.v{background:var(--vbg);border-color:var(--v);color:#166534;}
+    .ri.a{background:var(--abg);border-color:var(--a);color:#92400e;}
+    .ri.r{background:var(--rbg);border-color:var(--r);color:#991b1b;}
+    .ri-ic{font-size:1.4rem;}
+    .ri-nm{font-size:.71rem;font-weight:700;margin-top:3px;line-height:1.3;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:18px;}
+    .card{background:var(--card);border-radius:16px;box-shadow:0 2px 14px rgba(0,0,0,.07);overflow:hidden;display:flex;flex-direction:column;}
+    .card:hover{box-shadow:0 6px 24px rgba(0,0,0,.13);}
+    .card-hdr{display:flex;align-items:center;gap:12px;padding:16px 20px 11px;border-bottom:1px solid #f1f5f9;}
+    .card-ic{font-size:1.75rem;line-height:1;}
+    .card-hdr-t h2{font-size:.96rem;font-weight:700;}
+    .card-hdr-t span{font-size:.74rem;color:var(--sub);}
+    .sml{margin-left:auto;display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;}
+    .sem{display:flex;flex-direction:column;gap:3px;background:#111;padding:5px 6px;border-radius:16px;}
+    .lz{width:14px;height:14px;border-radius:50%;opacity:.15;}
+    .lz.on{opacity:1;box-shadow:0 0 7px currentColor;}
+    .lzv{background:#22c55e;color:#22c55e;}.lza{background:#f59e0b;color:#f59e0b;}.lzr{background:#ef4444;color:#ef4444;}
+    .slbl{font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+    .card-body{padding:13px 17px 16px;display:flex;flex-direction:column;gap:0;}
+    details{border-radius:10px;margin-bottom:7px;overflow:hidden;}
+    details[open]{box-shadow:0 2px 10px rgba(0,0,0,.08);}
+    summary{display:flex;align-items:center;gap:8px;padding:10px 13px;cursor:pointer;list-style:none;font-size:.86rem;font-weight:600;border-radius:10px;user-select:none;position:relative;}
+    summary::-webkit-details-marker{display:none;}
+    summary::after{content:'▸';position:absolute;right:11px;font-size:.78rem;transition:transform .2s;opacity:.6;}
+    details[open] summary::after{transform:rotate(90deg);}
+    details.v summary{background:var(--vbg);border:1px solid var(--vb);color:#166534;}
+    details.a summary{background:var(--abg);border:1px solid var(--ab);color:#92400e;}
+    details.r summary{background:var(--rbg);border:1px solid var(--rb);color:#991b1b;}
+    details[open].v summary,details[open].a summary,details[open].r summary{border-radius:10px 10px 0 0;}
+    .gene-body{padding:11px 13px 13px;font-size:.82rem;color:var(--sub);line-height:1.6;}
+    details.v .gene-body{background:#f8fffe;border:1px solid var(--vb);border-top:none;border-radius:0 0 10px 10px;}
+    details.a .gene-body{background:#fffdf5;border:1px solid var(--ab);border-top:none;border-radius:0 0 10px 10px;}
+    details.r .gene-body{background:#fff8f8;border:1px solid var(--rb);border-top:none;border-radius:0 0 10px 10px;}
+    .gene-tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.71rem;font-weight:700;margin-left:auto;white-space:nowrap;flex-shrink:0;}
+    .tag-hom{background:#fef9c3;color:#854d0e;border:1px solid #fde047;}
+    .tag-het{background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc;}
+    .tag-hom-r{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;}
+    .tag-nd{background:#f1f5f9;color:#64748b;border:1px solid #cbd5e1;}
+    .gene-info{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;margin-top:7px;font-size:.79rem;}
+    .gene-info .lbl{font-weight:600;color:var(--txt);white-space:nowrap;}
+    .gene-info .val{color:var(--sub);}
+    .aviso{background:#fef2f2;border-radius:8px;padding:9px 12px;font-size:.79rem;font-weight:600;color:#991b1b;margin-top:9px;}
+    .aviso-a{background:#fffbeb;color:#92400e;}
+    .aviso-v{background:#f0fdf4;color:#166534;}
+    .recs{background:#fff;border-radius:16px;padding:20px 22px;box-shadow:0 2px 14px rgba(0,0,0,.07);margin-top:22px;}
+    .recs h2{font-size:.95rem;font-weight:700;margin-bottom:13px;}
+    .recs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:8px;font-size:.82rem;}
+    .rec{border-radius:9px;padding:9px 12px;border-left:4px solid;}
+    .rec-r{background:#fef2f2;border-color:#ef4444;}
+    .rec-a{background:#fffbeb;border-color:#f59e0b;}
+    .rec-v{background:#f0fdf4;border-color:#22c55e;}
+    .panorama{background:linear-gradient(135deg,#0f4c81,#1565c0);color:#fff;border-radius:16px;padding:22px 26px;margin-bottom:18px;box-shadow:0 6px 20px rgba(21,101,192,.35);}
+    .pan-title{font-size:1.05rem;font-weight:700;opacity:.9;margin-bottom:14px;letter-spacing:.04em;}
+    .pan-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;}
+    .pan-item label{font-size:.72rem;opacity:.75;display:block;margin-bottom:5px;}
+    .pan-bar-bg{background:rgba(255,255,255,.18);border-radius:20px;height:14px;overflow:hidden;}
+    .pan-bar{height:100%;border-radius:20px;}
+    .pan-pct{font-size:1.2rem;font-weight:800;margin-top:4px;}
+    .pan-lbl{font-size:.67rem;opacity:.55;margin-top:1px;}
+    .suplem{background:#fff;border-radius:16px;padding:20px 22px;box-shadow:0 2px 14px rgba(0,0,0,.07);margin-top:14px;}
+    .suplem h2{font-size:.95rem;font-weight:700;margin-bottom:5px;}
+    .suplem h3{font-size:.78rem;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.05em;margin:13px 0 7px;}
+    .suplem-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:7px;font-size:.81rem;}
+    .sp{border-radius:9px;padding:9px 12px;display:flex;flex-direction:column;gap:2px;}
+    .sp-r{background:#fef2f2;border-left:4px solid var(--r);}
+    .sp-a{background:#fffbeb;border-left:4px solid var(--a);}
+    .sp-v{background:#f0fdf4;border-left:4px solid var(--v);}
+    .sp strong{color:var(--txt);}
+    .sp .dose{font-size:.75rem;color:var(--sub);}
+    .foot{background:linear-gradient(135deg,#0d1b30,#1a3054);color:#fff;padding:36px 30px;margin:22px -14px 0;font-size:.82rem;}
+    .foot-title{font-size:1.2rem;font-weight:800;margin-bottom:4px;text-align:center;}
+    .foot-sub{text-align:center;opacity:.8;font-size:.83rem;margin-bottom:4px;}
+    .foot-degs{text-align:center;opacity:.72;font-size:.78rem;line-height:1.8;margin-bottom:18px;}
+    .foot-btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:18px;}
+    .foot-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:9px 18px;color:#fff;text-decoration:none;font-size:.82rem;font-weight:600;display:flex;align-items:center;gap:7px;transition:background .2s;}
+    .foot-btn:hover{background:rgba(255,255,255,.2);}
+    .foot-disc{text-align:center;font-size:.73rem;opacity:.5;margin-top:4px;}
+    .search-wrap{background:#fff;border-radius:14px;padding:14px 18px;margin-bottom:18px;box-shadow:0 2px 10px rgba(0,0,0,.06);display:flex;align-items:center;gap:10px;}
+    .search-wrap input{flex:1;border:2px solid #e2e8f0;border-radius:10px;padding:10px 14px;font-size:.9rem;font-family:inherit;outline:none;transition:border-color .2s,box-shadow .2s;color:var(--txt);}
+    .search-wrap input:focus{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.15);}
+    .search-wrap input::placeholder{color:#94a3b8;}
+    .search-ic{font-size:1.25rem;color:#94a3b8;flex-shrink:0;}
+    .search-clear{background:none;border:none;cursor:pointer;font-size:1.1rem;color:#94a3b8;padding:4px;border-radius:6px;display:none;line-height:1;}
+    .search-clear:hover{background:#f1f5f9;color:#475569;}
+    .search-count{font-size:.78rem;color:var(--sub);white-space:nowrap;flex-shrink:0;}
+    mark.gene-highlight{background:#fef08a;color:#78350f;border-radius:3px;padding:0 3px;font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.12);}
+    @media(max-width:600px){.grid{grid-template-columns:1fr;}.hdr h1{font-size:1.15rem;}.apt-grid{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+  <div class="hdr">
+    <h1>🧬 Relatório Genético Completo — Sandra Moreno Ceregatto</h1>
+    <p>Nutrigenética, Metabolismo &amp; Genética Esportiva · Sequenciamento Genético (NGS) · Material: Mucosa oral · Pedido 1695347</p>
+    <div style="margin-top:18px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-left:4px solid #60a5fa;border-radius:12px;padding:14px 20px;display:inline-block;">
+      <p style="font-size:.8rem;opacity:.75;margin-bottom:5px;letter-spacing:.08em;text-transform:uppercase;">📋 Teste interpretado e laudo realizado por</p>
+      <p style="font-size:1.35rem;font-weight:800;letter-spacing:.03em;opacity:1;margin:0;">👨‍⚕️ Dr. Ramon Nicotari <span style="opacity:.6;font-weight:400;font-size:1rem;">· CRN3-31139 · Nutricionista</span></p>
+    </div>
+    <div class="hdr-badges">
+      <span class="hdr-badge">📅 Nasc: 21/11/1959</span>
+      <span class="hdr-badge">♀️ Sexo: Feminino</span>
+      <span class="hdr-badge">🔬 NGS · Mucosa oral</span>
+      <span class="hdr-badge">📋 Laudo: 07/2026</span>
+      <span class="hdr-badge">🧬 112 genes analisados</span>
+    </div>
+  </div>
+
+  <div class="aptidao">
+    <div class="apt-title">⚡ APTIDÃO FÍSICA GENÉTICA — PERFIL DE TIPAGEM MUSCULAR</div>
+    <div class="apt-grid">
+      <div class="apt-item">
+        <label>🏋️ PERFIL FORÇA (Power)</label>
+        <div class="apt-bar-bg"><div class="apt-bar bar-a" style="width:61%"></div></div>
+        <div class="apt-pct">61%</div>
+      </div>
+      <div class="apt-item">
+        <label>🏃 PERFIL RESISTÊNCIA (Endurance)</label>
+        <div class="apt-bar-bg"><div class="apt-bar bar-v" style="width:39%"></div></div>
+        <div class="apt-pct">39%</div>
+      </div>
+    </div>
+    <div class="apt-note">Perfil genético com predomínio de força/potência (ACTN3 CT, ADRB2 GG/GC, IGF1 AG, IL6 CG, PPARA GC, SLC16A1 AT). Genes favoráveis à resistência também presentes (BDKRB2 TT, HIF1A CC, NOS3 TG, VEGFA CG, PPARD), sustentando boa capacidade aeróbica de base. Proporção Força:Resistência conforme laudo original.</div>
+  </div>
+
+  <div class="panorama">
+    <div class="pan-title">🧬 PANORAMA GENÉTICO — RISCO POR ÁREA</div>
+    <div class="pan-grid">
+      <div class="pan-item">
+        <label>❤️ Coração &amp; Lipídios</label>
+        <div class="pan-bar-bg"><div class="pan-bar bar-r" style="width:72%"></div></div>
+        <div class="pan-pct">72%</div>
+        <div class="pan-lbl">Risco elevado — ↑LDL, ↑colesterol, ↑TG</div>
+      </div>
+      <div class="pan-item">
+        <label>🩸 Diabetes &amp; Glicemia</label>
+        <div class="pan-bar-bg"><div class="pan-bar bar-r" style="width:78%"></div></div>
+        <div class="pan-pct">78%</div>
+        <div class="pan-lbl">Risco elevado — TCF7L2, IRS1, KCNJ11</div>
+      </div>
+      <div class="pan-item">
+        <label>🫄 Esteatose Hepática</label>
+        <div class="pan-bar-bg"><div class="pan-bar bar-r" style="width:70%"></div></div>
+        <div class="pan-pct">70%</div>
+        <div class="pan-lbl">Risco elevado — PNPLA3, PEMT, GCKR</div>
+      </div>
+      <div class="pan-item">
+        <label>⚖️ Peso &amp; Obesidade</label>
+        <div class="pan-bar-bg"><div class="pan-bar bar-r" style="width:82%"></div></div>
+        <div class="pan-pct">82%</div>
+        <div class="pan-lbl">Risco elevado — FTO, GNPDA2, UCP2</div>
+      </div>
+      <div class="pan-item">
+        <label>🫀 Pressão Arterial</label>
+        <div class="pan-bar-bg"><div class="pan-bar bar-r" style="width:75%"></div></div>
+        <div class="pan-pct">75%</div>
+        <div class="pan-lbl">Risco elevado — ACE, ATP2B1, EDN1</div>
+      </div>
+      <div class="pan-item">
+        <label>💊 Vitaminas &amp; Minerais</label>
+        <div class="pan-bar-bg"><div class="pan-bar bar-r" style="width:68%"></div></div>
+        <div class="pan-pct">68%</div>
+        <div class="pan-lbl">Déficit — Vit. D, A, B9, B6</div>
+      </div>
+      <div class="pan-item">
+        <label>☕ Sensibilidade à Cafeína</label>
+        <div class="pan-bar-bg"><div class="pan-bar bar-a" style="width:55%"></div></div>
+        <div class="pan-pct">55%</div>
+        <div class="pan-lbl">Atenção — tendência a maior consumo</div>
+      </div>
+      <div class="pan-item">
+        <label>🧠 Cérebro &amp; Humor</label>
+        <div class="pan-bar-bg"><div class="pan-bar bar-a" style="width:52%"></div></div>
+        <div class="pan-pct">52%</div>
+        <div class="pan-lbl">Atenção — humor, cognição, dor</div>
+      </div>
+      <div class="pan-item">
+        <label>🧪 Desintoxicação</label>
+        <div class="pan-bar-bg"><div class="pan-bar bar-a" style="width:62%"></div></div>
+        <div class="pan-pct">62%</div>
+        <div class="pan-lbl">Atenção — fase I/II reduzidas</div>
+      </div>
+      <div class="pan-item">
+        <label>🛡️ Estresse Oxidativo</label>
+        <div class="pan-bar-bg"><div class="pan-bar bar-a" style="width:58%"></div></div>
+        <div class="pan-pct">58%</div>
+        <div class="pan-lbl">Atenção — SOD2, GPX1, NQO1, CAT</div>
+      </div>
+      <div class="pan-item">
+        <label>⚙️ Metabolismo do Ferro</label>
+        <div class="pan-bar-bg"><div class="pan-bar bar-a" style="width:48%"></div></div>
+        <div class="pan-pct">48%</div>
+        <div class="pan-lbl">Atenção — TMPRSS6 ↑hepcidina</div>
+      </div>
+      <div class="pan-item">
+        <label>🥛 Intolerâncias</label>
+        <div class="pan-bar-bg"><div class="pan-bar bar-a" style="width:60%"></div></div>
+        <div class="pan-pct">60%</div>
+        <div class="pan-lbl">Atenção — lactose (MCM6 GG) e glúten</div>
+      </div>
+      <div class="pan-item">
+        <label>🌙 Sono &amp; Circadiano</label>
+        <div class="pan-bar-bg"><div class="pan-bar bar-a" style="width:64%"></div></div>
+        <div class="pan-pct">64%</div>
+        <div class="pan-lbl">Atenção — CLOCK, CRY1/2, MTNR1A/B</div>
+      </div>
+      <div class="pan-item">
+        <label>🅱️ Vitamina B12</label>
+        <div class="pan-bar-bg"><div class="pan-bar bar-v" style="width:78%"></div></div>
+        <div class="pan-pct">78%</div>
+        <div class="pan-lbl">Favorável — FUT2 AA, ↑níveis de B12</div>
+      </div>
+      <div class="pan-item">
+        <label>🧬 Proteção Cardiovascular</label>
+        <div class="pan-bar-bg"><div class="pan-bar bar-v" style="width:72%"></div></div>
+        <div class="pan-pct">72%</div>
+        <div class="pan-lbl">Favorável — PCSK9 LOF, PSRC1, ↑HDL</div>
+      </div>
+      <div class="pan-item">
+        <label>⏳ Longevidade Celular</label>
+        <div class="pan-bar-bg"><div class="pan-bar bar-v" style="width:60%"></div></div>
+        <div class="pan-pct">60%</div>
+        <div class="pan-lbl">Favorável — FOXO3A, KLOTHO, IGF1R</div>
+      </div>
+    </div>
+  </div>
+  <div class="nota">
+    <strong>📖 Como ler este relatório:</strong> cada gene é apresentado com seu SNP (variante), o <strong>genótipo encontrado</strong> e a interpretação do impacto. O semáforo de cada card resume o nível de atenção da área. As tags indicam se o genótipo é <strong>homozigoto favorável</strong>, <strong>heterozigoto</strong>, <strong>homozigoto de risco</strong> ou não determinado. Genes podem aparecer em mais de uma área — isso é esperado, pois um mesmo gene influencia vários sistemas. Este laudo tem caráter informativo e de apoio à conduta nutricional, não substituindo avaliação clínica individualizada.
+  </div>
+
+  <div class="leg">
+    <h3>Legenda do Semáforo de Risco</h3>
+    <div class="li"><span class="dot dv"></span> Favorável / Protetor</div>
+    <div class="li"><span class="dot da"></span> Atenção / Risco moderado</div>
+    <div class="li"><span class="dot dr"></span> Risco elevado</div>
+  </div>
+
+  <div class="search-wrap">
+    <span class="search-ic">🔍</span>
+    <input id="searchInput" type="text" placeholder="Buscar gene, nutriente, condição... (ex: FTO, vitamina D, diabetes)"
+           oninput="searchCards(this.value)" autocomplete="off">
+    <button class="search-clear" id="searchClear" onclick="clearSearch()" title="Limpar">✕</button>
+    <span class="search-count" id="searchCount"></span>
+  </div>
+
+  <div class="res-wrap">
+    <h2>📊 Visão Geral por Área <span style="font-weight:400;color:var(--sub);font-size:.8rem;">(clique para filtrar — pode selecionar várias)</span></h2>
+    <div class="res-grid">
+      <div class="ri" style="background:#eff6ff;border-color:#3b82f6;color:#1e40af;grid-column:1/-1;padding:10px" onclick="filterCard('todos',this)">
+        <div class="ri-ic">🔍</div><div class="ri-nm">TODOS</div>
+      </div>
+      <div class="ri r" onclick="filterCard('card-coracao',this)"><div class="ri-ic">❤️</div><div class="ri-nm">Coração &amp; Lipídios</div></div>
+      <div class="ri r" onclick="filterCard('card-diabetes',this)"><div class="ri-ic">🩸</div><div class="ri-nm">Diabetes &amp; Açúcar</div></div>
+      <div class="ri r" onclick="filterCard('card-esteatose',this)"><div class="ri-ic">🫄</div><div class="ri-nm">Esteatose Hepática</div></div>
+      <div class="ri r" onclick="filterCard('card-peso',this)"><div class="ri-ic">⚖️</div><div class="ri-nm">Peso &amp; Obesidade</div></div>
+      <div class="ri r" onclick="filterCard('card-pressao',this)"><div class="ri-ic">🫀</div><div class="ri-nm">Pressão Arterial</div></div>
+      <div class="ri r" onclick="filterCard('card-sindrome',this)"><div class="ri-ic">🏥</div><div class="ri-nm">Síndrome Metabólica</div></div>
+      <div class="ri r" onclick="filterCard('card-vitaminas',this)"><div class="ri-ic">💊</div><div class="ri-nm">Vitaminas &amp; Minerais</div></div>
+      <div class="ri a" onclick="filterCard('card-alzheimer',this)"><div class="ri-ic">🧩</div><div class="ri-nm">Alzheimer</div></div>
+      <div class="ri a" onclick="filterCard('card-cafeina',this)"><div class="ri-ic">☕</div><div class="ri-nm">Cafeína</div></div>
+      <div class="ri a" onclick="filterCard('card-cancer',this)"><div class="ri-ic">🎗️</div><div class="ri-nm">Câncer</div></div>
+      <div class="ri a" onclick="filterCard('card-celiaca',this)"><div class="ri-ic">🌾</div><div class="ri-nm">Doença Celíaca</div></div>
+      <div class="ri a" onclick="filterCard('card-cerebro',this)"><div class="ri-ic">🧠</div><div class="ri-nm">Cérebro &amp; Humor</div></div>
+      <div class="ri a" onclick="filterCard('card-depressao',this)"><div class="ri-ic">💭</div><div class="ri-nm">Depressão &amp; Ansiedade</div></div>
+      <div class="ri a" onclick="filterCard('card-detox',this)"><div class="ri-ic">🧪</div><div class="ri-nm">Desintoxicação</div></div>
+      <div class="ri a" onclick="filterCard('card-oxidativo',this)"><div class="ri-ic">🛡️</div><div class="ri-nm">Estresse Oxidativo</div></div>
+      <div class="ri a" onclick="filterCard('card-ferro',this)"><div class="ri-ic">⚙️</div><div class="ri-nm">Ferro</div></div>
+      <div class="ri a" onclick="filterCard('card-forca',this)"><div class="ri-ic">🏋️</div><div class="ri-nm">Força</div></div>
+      <div class="ri a" onclick="filterCard('card-habitos',this)"><div class="ri-ic">🥗</div><div class="ri-nm">Hábitos Alimentares</div></div>
+      <div class="ri a" onclick="filterCard('card-intolerancia',this)"><div class="ri-ic">🥛</div><div class="ri-nm">Intolerâncias</div></div>
+      <div class="ri a" onclick="filterCard('card-lesao',this)"><div class="ri-ic">🤕</div><div class="ri-nm">Lesão &amp; Recuperação</div></div>
+      <div class="ri a" onclick="filterCard('card-sono',this)"><div class="ri-ic">🌙</div><div class="ri-nm">Sono &amp; Circadiano</div></div>
+      <div class="ri v" onclick="filterCard('card-longevidade',this)"><div class="ri-ic">⏳</div><div class="ri-nm">Longevidade</div></div>
+      <div class="ri v" onclick="filterCard('card-resistencia',this)"><div class="ri-ic">🏃</div><div class="ri-nm">Resistência</div></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <!-- ===================== CARD PESO ===================== -->
+    <div class="card" id="card-peso">
+      <div class="card-hdr">
+        <div class="card-ic">⚖️</div>
+        <div class="card-hdr-t"><h2>Peso &amp; Obesidade</h2><span>FTO · GNPDA2 · UCP2 · MCP1 · GLP1R · SH2B1 · PPARG · PER2 · PCSK1 · ETV5 · BDNF · QPCTL · +</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza"></div><div class="lz lzr on"></div></div><span class="slbl" style="color:#ef4444">Alto</span></div>
+      </div>
+      <div class="card-body">
+        <details class="r"><summary>🧬 FTO — Gene mestre do apetite e IMC <span class="gene-tag tag-het">Heterozigoto TA / CA</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs9939609 (TA) · rs8050136 (CA) — alelo de impacto A</span>
+            <span class="lbl">O que é:</span><span class="val">FTO regula fome, saciedade e IMC no hipotálamo.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo A eleva grelina e reduz sinal de saciedade, aumentando ingestão calórica.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior predisposição à obesidade e diabetes tipo 2 — <strong>risco atenuado com atividade física regular</strong>.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Berberina + proteína whey</strong> — ativam AMPK, reduzindo o efeito do FTO.</span>
+          </div><div class="aviso">⚠️ O componente ambiental é forte aqui: exercício e controle de porções reduzem substancialmente o risco genético do FTO.</div></div>
+        </details>
+        <details class="r"><summary>🧬 GNPDA2 — Sinalização de saciedade <span class="gene-tag tag-het">Heterozigoto AG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs10938397 (AG) — alelo de impacto G</span>
+            <span class="lbl">O que é:</span><span class="val">Um dos marcadores mais consistentes de IMC elevado em GWAS.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Atua na via da glucosamina, crítica à sinalização de saciedade hipotalâmica.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior risco de obesidade adulta.</span>
+          </div><div class="aviso">⚠️ Reforçar densidade de fibras e proteína nas refeições para melhorar saciedade.</div></div>
+        </details>
+        <details class="r"><summary>🧬 UCP2 — Gasto energético mitocondrial <span class="gene-tag tag-hom-r">Homozigoto TT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs659366 (TT) — alelo de impacto T</span>
+            <span class="lbl">O que é:</span><span class="val">Proteína desacopladora que regula oxidação de substratos e gasto de energia em repouso.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">TT reduz a oxidação de gorduras e o gasto energético basal.</span>
+            <span class="lbl">Impacto:</span><span class="val">Tendência a ganho ponderal e obesidade metabólica.</span>
+          </div><div class="aviso">⚠️ Priorizar exercício aeróbico e força para elevar o gasto energético de repouso.</div></div>
+        </details>
+        <details class="r"><summary>🧬 MCP1 / CCL2 — Inflamação do tecido adiposo <span class="gene-tag tag-hom-r">Homozigoto GG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1024611 (GG) — alelo de impacto G</span>
+            <span class="lbl">O que é:</span><span class="val">Quimiocina que recruta monócitos para o tecido adiposo (inflamação de baixo grau).</span>
+            <span class="lbl">Mecanismo:</span><span class="val">GG aumenta a expressão da citocina, favorecendo resistência insulínica.</span>
+            <span class="lbl">Impacto:</span><span class="val">Predispõe à obesidade e complicações metabólicas.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Ômega-3 EPA+DHA + curcumina com piperina</strong> — reduzem quimiotaxia e inflamação.</span>
+          </div><div class="aviso">⚠️ Dieta anti-inflamatória é peça-chave neste perfil.</div></div>
+        </details>
+        <details class="r"><summary>🧬 GLP1R — Receptor de incretina / saciedade <span class="gene-tag tag-hom-r">Homozigoto GG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs6923761 (GG) — alelo de impacto G</span>
+            <span class="lbl">O que é:</span><span class="val">Receptor do GLP-1, essencial à saciedade pós-refeição.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo G responde de forma menos eficiente à secreção de incretinas.</span>
+            <span class="lbl">Impacto:</span><span class="val">Menor controle do apetite e maior suscetibilidade ao ganho de peso.</span>
+          </div><div class="aviso">⚠️ Refeições com proteína e fibra ajudam a compensar a menor resposta incretínica.</div></div>
+        </details>
+        <details class="r"><summary>🧬 SH2B1 — Sinalização de leptina/insulina <span class="gene-tag tag-het">Heterozigoto AG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs7498665 (AG) — alelo de impacto G</span>
+            <span class="lbl">O que é:</span><span class="val">Proteína adaptadora da sensibilidade à leptina e insulina.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Reduz a eficiência da sinalização de leptina no SNC.</span>
+            <span class="lbl">Impacto:</span><span class="val">Compromete controle do apetite e gasto energético.</span>
+          </div><div class="aviso-a aviso">⚠️ Sono adequado e regularidade alimentar melhoram a sinalização de leptina.</div></div>
+        </details>
+        <details class="r"><summary>🧬 PPARG — Adipogênese e sensibilidade à insulina <span class="gene-tag tag-het">Heterozigoto CG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1801282 (CG) — alelos de impacto C, G</span>
+            <span class="lbl">O que é:</span><span class="val">Receptor nuclear central na adipogênese e metabolismo da glicose.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo G (Pro12Ala) tem efeito protetor que desaparece com IMC &gt; 34,5.</span>
+            <span class="lbl">Impacto:</span><span class="val">Modula risco de diabetes conforme composição corporal.</span>
+          </div><div class="aviso-a aviso">⚠️ Manter IMC controlado preserva o efeito protetor do alelo G.</div></div>
+        </details>
+        <details class="r"><summary>🧬 PER2 — Relógio circadiano e gordura abdominal <span class="gene-tag tag-hom-r">Homozigoto TT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs4663302 (TT) — alelo de impacto T</span>
+            <span class="lbl">O que é:</span><span class="val">Gene expresso em padrão circadiano, ligado a comportamento alimentar.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">TT associa-se a maior estresse dietético e menor planejamento das refeições.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior obesidade abdominal e maior abandono de tratamentos de perda de peso.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Melatonina + magnésio</strong> — apoiam regularidade circadiana.</span>
+          </div><div class="aviso">⚠️ Estruturar horários fixos de refeição e acompanhamento contínuo aumenta a adesão.</div></div>
+        </details>
+        <details class="r"><summary>🧬 PCSK1 — Processamento de pró-hormônios <span class="gene-tag tag-het">Heterozigoto GC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs6234 (GC) — alelo de impacto C</span>
+            <span class="lbl">O que é:</span><span class="val">Convertase relacionada à obesidade monogênica.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Variante associada de forma consistente à obesidade.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior propensão ao acúmulo de peso.</span>
+          </div><div class="aviso-a aviso">⚠️ Reforça a importância do controle alimentar estruturado.</div></div>
+        </details>
+        <details class="r"><summary>🧬 ETV5 — Homeostase energética central <span class="gene-tag tag-het">Heterozigoto TC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs7647305 (TC) — alelo de impacto C</span>
+            <span class="lbl">O que é:</span><span class="val">Atua no SNC influenciando o balanço energético.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo C correlaciona-se com aumento de gordura corporal.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior dificuldade na manutenção do peso saudável.</span>
+          </div><div class="aviso-a aviso">⚠️ Consistência a longo prazo é mais eficaz do que dietas restritivas pontuais.</div></div>
+        </details>
+        <details class="r"><summary>🧬 QPCTL — Peptídeos neuroendócrinos e glicose <span class="gene-tag tag-hom">Homozigoto CC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs2287019 (CC) — alelos de impacto C, T</span>
+            <span class="lbl">O que é:</span><span class="val">Parálogo de QPCT, atua sobre peptídeos neuroendócrinos.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T pode melhorar homeostase da glicose em dieta rica em fibras.</span>
+            <span class="lbl">Impacto:</span><span class="val">Associado a obesidade e metabolismo da glicose.</span>
+          </div><div class="aviso-a aviso">⚠️ Dieta rica em fibras e carboidratos de baixo índice glicêmico é favorável.</div></div>
+        </details>
+        <details class="r"><summary>🧬 BDNF (rs925946) — Controle de apetite hipotalâmico <span class="gene-tag tag-het">Heterozigoto TG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs925946 (TG) — alelo de impacto T</span>
+            <span class="lbl">O que é:</span><span class="val">Fator neurotrófico que regula apetite e comportamento alimentar.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T reduz a expressão da proteína, diminuindo a saciedade.</span>
+            <span class="lbl">Impacto:</span><span class="val">Favorece maior ingestão calórica e aumento do IMC.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Ômega-3 DHA</strong> + exercício aeróbico — amplificam ação do BDNF.</span>
+          </div><div class="aviso-a aviso">⚠️ Exercício aeróbico eleva BDNF naturalmente.</div></div>
+        </details>
+        <details class="r"><summary>🧬 LYPLAL1-AS1 — Adiposidade abdominal <span class="gene-tag tag-het">Heterozigoto AG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs2605100 (AG) — alelo de impacto G</span>
+            <span class="lbl">O que é:</span><span class="val">Locus ligado à distribuição de gordura (cintura e relação cintura-quadril).</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Heterozigotos têm ~9% maior risco de diabetes tipo 2.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior adiposidade abdominal.</span>
+          </div><div class="aviso-a aviso">⚠️ Monitorar circunferência abdominal como marcador de risco.</div></div>
+        </details>
+        <details class="v"><summary>🧬 ADRB2 (rs1042714) — Boa resposta à dieta <span class="gene-tag tag-het">Heterozigoto GC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1042714 (GC, Gln27Glu) — impacto negativo sobre IMC (favorável)</span>
+            <span class="lbl">O que é:</span><span class="val">Receptor adrenérgico beta-2, ligado a lipólise.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Mulheres com esta variante respondem bem à dieta (↓IMC, peso).</span>
+            <span class="lbl">Impacto:</span><span class="val">Fator favorável à resposta a intervenção alimentar.</span>
+          </div><div class="aviso-v aviso">✅ Boa responsividade à dieta — cuidado apenas para não perder massa magra em restrições agressivas.</div></div>
+        </details>
+        <details class="v"><summary>🧬 BDNF (rs6265) — Val66Met, ↓IMC <span class="gene-tag tag-het">Heterozigoto CT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs6265 (CT, Val66Met) — associado a decréscimo do IMC (favorável)</span>
+            <span class="lbl">O que é:</span><span class="val">Neurotrofina ligada a humor, memória e metabolismo.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T associa-se a menor IMC por GWAS.</span>
+            <span class="lbl">Impacto:</span><span class="val">Efeito favorável sobre o peso (ver também Cérebro &amp; Humor).</span>
+          </div><div class="aviso-v aviso">✅ Componente favorável dentro de um contexto de risco poligênico para peso.</div></div>
+        </details>
+        <details class="v"><summary>🧬 GHSR — Receptor de grelina <span class="gene-tag tag-het">Heterozigoto GC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs490683 (GC) — impacto negativo sobre obesidade (favorável)</span>
+            <span class="lbl">O que é:</span><span class="val">Receptor da grelina, ligado a apetite e peso corporal.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Homozigotos CC associam-se a maior perda de peso em intervenção.</span>
+            <span class="lbl">Impacto:</span><span class="val">Perfil parcialmente favorável à perda de peso.</span>
+          </div><div class="aviso-v aviso">✅ Responde bem a intervenções alimentares dirigidas.</div></div>
+        </details>
+        <details class="v"><summary>🧬 CNR1 — Receptor canabinoide (protetor) <span class="gene-tag tag-hom">Homozigoto TT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1049353 (TT) — impacto negativo sobre obesidade (favorável)</span>
+            <span class="lbl">O que é:</span><span class="val">Receptor envolvido em humor, apetite e cognição.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">TT associa-se a menor IMC e massa gorda vs CC; T protege contra depressão por estresse.</span>
+            <span class="lbl">Impacto:</span><span class="val">Fator favorável para peso e humor.</span>
+          </div><div class="aviso-v aviso">✅ Variante protetora — também citada em Depressão &amp; Ansiedade.</div></div>
+        </details>
+        <details class="v"><summary>🧬 FABP2 — Absorção de ácidos graxos <span class="gene-tag tag-het">Heterozigoto TC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1799883 (TC) — impacto negativo sobre gordura abdominal (favorável)</span>
+            <span class="lbl">O que é:</span><span class="val">Proteína de ligação de ácidos graxos intestinal.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T associa-se a menor gordura abdominal em mulheres.</span>
+            <span class="lbl">Impacto:</span><span class="val">Fator favorável na distribuição de gordura.</span>
+          </div><div class="aviso-v aviso">✅ Componente protetor para adiposidade abdominal.</div></div>
+        </details>
+      </div>
+    </div>
+
+    <!-- ===================== CARD DIABETES ===================== -->
+    <div class="card" id="card-diabetes">
+      <div class="card-hdr">
+        <div class="card-ic">🩸</div>
+        <div class="card-hdr-t"><h2>Diabetes &amp; Açúcar</h2><span>TCF7L2 · IRS1 · KCNJ11 · IGF2BP2 · MTNR1B · SH2B3 · SIRT1 · PROX1 · CRY2 · IL6 · ADRB2</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza"></div><div class="lz lzr on"></div></div><span class="slbl" style="color:#ef4444">Alto</span></div>
+      </div>
+      <div class="card-body">
+        <details class="r"><summary>🧬 TCF7L2 — Principal gene de diabetes tipo 2 <span class="gene-tag tag-het">Heterozigoto CT / GT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs7903146 (CT) · rs12255372 (GT) — alelo de impacto T</span>
+            <span class="lbl">O que é:</span><span class="val">Fator de transcrição da via Wnt, central na homeostase da glicose.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T reduz secreção de insulina pelas células beta e a sensibilidade periférica.</span>
+            <span class="lbl">Impacto:</span><span class="val">Heterozigotos têm risco ~1,4× maior de diabetes tipo 2.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Berberina + cromo picolinato</strong> — berberina ativa AMPK.</span>
+          </div><div class="aviso">⚠️ Marcador de maior peso genético para diabetes — priorizar controle glicêmico e carboidratos de baixo índice.</div></div>
+        </details>
+        <details class="r"><summary>🧬 IRS1 — Substrato do receptor de insulina <span class="gene-tag tag-het">Heterozigoto TC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs2943641 (TC) — alelo de impacto C</span>
+            <span class="lbl">O que é:</span><span class="val">Proteína-chave na cascata de sinalização da insulina.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo C reduz a eficiência da sinalização insulínica.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior risco de diabetes tipo 2 e resistência à insulina.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Berberina + inositol (mio + d-chiro)</strong> — inositol é 2º mensageiro do receptor de insulina.</span>
+          </div><div class="aviso">⚠️ Atenção redobrada à sensibilidade insulínica.</div></div>
+        </details>
+        <details class="r"><summary>🧬 KCNJ11 — Canal de potássio das células beta <span class="gene-tag tag-het">Heterozigoto TC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs5219 (TC, E23K) — alelo de impacto T</span>
+            <span class="lbl">O que é:</span><span class="val">Subunidade de canais K-ATP que controlam a liberação de insulina.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T (Lys) dificulta o fechamento do canal e a secreção de insulina.</span>
+            <span class="lbl">Impacto:</span><span class="val">Um dos fatores genéticos mais robustos para hiperglicemia.</span>
+          </div><div class="aviso">⚠️ Reforça necessidade de monitorar glicemia de jejum e pós-prandial.</div></div>
+        </details>
+        <details class="r"><summary>🧬 IGF2BP2 — Secreção de insulina <span class="gene-tag tag-het">Heterozigoto GT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs4402960 (GT) — alelo de impacto T</span>
+            <span class="lbl">O que é:</span><span class="val">Regula desenvolvimento das células beta pancreáticas.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T reduz a secreção de insulina estimulada por glicose.</span>
+            <span class="lbl">Impacto:</span><span class="val">Risco elevado de diabetes tipo 2.</span>
+          </div><div class="aviso">⚠️ Compõe o perfil de risco glicêmico.</div></div>
+        </details>
+        <details class="r"><summary>🧬 MTNR1B — Receptor de melatonina e glicemia <span class="gene-tag tag-het">Heterozigoto CG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs10830963 (CG) — alelo de impacto G</span>
+            <span class="lbl">O que é:</span><span class="val">Receptor de melatonina que influencia a secreção de insulina.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo G eleva o risco via glicemia de jejum prejudicada.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior risco de diabetes tipo 2.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Melatonina + magnésio</strong> — regula ritmo circadiano e glicemia noturna.</span>
+          </div><div class="aviso">⚠️ Evitar refeições ricas em carboidrato à noite, quando a melatonina está alta.</div></div>
+        </details>
+        <details class="r"><summary>🧬 SH2B3 — Sinalização de citocinas <span class="gene-tag tag-hom-r">Homozigoto TT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs3184504 (TT) — alelo de impacto T</span>
+            <span class="lbl">O que é:</span><span class="val">Regulador negativo de citocinas, ligado a autoimunidade.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">TT confere maior risco para diabetes tipo 1 e doença celíaca.</span>
+            <span class="lbl">Impacto:</span><span class="val">Componente de risco autoimune/glicêmico (ver também Doença Celíaca).</span>
+          </div><div class="aviso">⚠️ Relevante no contexto de intolerância ao glúten e diabetes insulinodependente.</div></div>
+        </details>
+        <details class="r"><summary>🧬 SIRT1 — Sirtuína e homeostase energética <span class="gene-tag tag-hom-r">Homozigoto GG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs7896005 (GG) — alelo de impacto G</span>
+            <span class="lbl">O que é:</span><span class="val">Sirtuína-1, essencial à sensibilidade à insulina e metabolismo.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo G associa-se a regulação menos eficiente da glicose.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior risco de hiperglicemia de jejum.</span>
+          </div><div class="aviso">⚠️ Restrição calórica moderada e exercício ativam vias de sirtuínas.</div></div>
+        </details>
+        <details class="r"><summary>🧬 PROX1 — Sensibilidade à insulina <span class="gene-tag tag-hom-r">Homozigoto CC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs340874 (CC) — alelo de impacto C</span>
+            <span class="lbl">O que é:</span><span class="val">Fator de transcrição conservado, papel no desenvolvimento metabólico.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo C associa-se a menor sensibilidade à insulina.</span>
+            <span class="lbl">Impacto:</span><span class="val">Contribui para resistência insulínica.</span>
+          </div><div class="aviso">⚠️ Compõe o quadro de resistência à insulina.</div></div>
+        </details>
+        <details class="a"><summary>🧬 IL6 — Citocina inflamatória <span class="gene-tag tag-het">Heterozigoto CG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1800795 (CG) — alelo de impacto G</span>
+            <span class="lbl">O que é:</span><span class="val">Interleucina-6, ligada à inflamação e metabolismo da glicose.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Homozigotos GG podem ter risco levemente maior de diabetes tipo 2.</span>
+            <span class="lbl">Impacto:</span><span class="val">Heterozigota — risco inflamatório moderado (ver também Força).</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Ômega-3 + curcumina</strong> — inibem IL-6 e NF-κB.</span>
+          </div><div class="aviso-a aviso">⚠️ Controle da inflamação metabólica é favorável ao perfil glicêmico.</div></div>
+        </details>
+        <details class="a"><summary>🧬 CRY2 — Relógio circadiano e glicose <span class="gene-tag tag-het">Heterozigoto AC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs11605924 (AC) — alelo de impacto A</span>
+            <span class="lbl">O que é:</span><span class="val">Componente do relógio circadiano que influencia glicose de jejum.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo A associa-se a maior glicose pós-sobrecarga (efeito sazonal).</span>
+            <span class="lbl">Impacto:</span><span class="val">Modula glicemia — evidência ainda em consolidação.</span>
+          </div><div class="aviso-a aviso">⚠️ Exposição à luz natural diurna ajuda a regular a glicemia (ver Sono &amp; Circadiano).</div></div>
+        </details>
+        <details class="r"><summary>🧬 ADRB2 (rs1042713) — Resistência à insulina <span class="gene-tag tag-hom-r">Homozigoto GG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1042713 (GG, Gly16Arg) — alelo de impacto G</span>
+            <span class="lbl">O que é:</span><span class="val">Receptor adrenérgico beta-2.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">GG associa-se a menor densidade de receptor e maior resistência à insulina.</span>
+            <span class="lbl">Impacto:</span><span class="val">Contribui para resistência insulínica (ver também Força).</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Magnésio + CoQ10</strong> — apoiam resposta adrenérgica.</span>
+          </div><div class="aviso">⚠️ Homozigoto de risco — reforça atenção à sensibilidade insulínica.</div></div>
+        </details>
+      </div>
+    </div>
+    <!-- ===================== CARD CORAÇÃO ===================== -->
+    <div class="card" id="card-coracao">
+      <div class="card-hdr">
+        <div class="card-ic">❤️</div>
+        <div class="card-hdr-t"><h2>Coração &amp; Lipídios</h2><span>ABCG5 · HMGCR · LDLR · APOA4 · APOB · PPARD · PON1 · PCSK9 · PSRC1 · CETP · LIPC · LPL</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza"></div><div class="lz lzr on"></div></div><span class="slbl" style="color:#ef4444">Alto</span></div>
+      </div>
+      <div class="card-body">
+        <details class="r"><summary>🧬 ABCG5 — Excreção biliar de colesterol <span class="gene-tag tag-hom-r">Homozigoto GG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs6756629 (GG) — alelo de impacto G</span>
+            <span class="lbl">O que é:</span><span class="val">Transportador que limita a absorção intestinal de esteróis.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">GG reduz a eficiência do transporte, elevando LDL plasmático.</span>
+            <span class="lbl">Impacto:</span><span class="val">Marcador de hipercolesterolemia e maior risco cardiovascular.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Fitosteróis + fibras solúveis</strong> (via dieta) — reduzem absorção de colesterol.</span>
+          </div><div class="aviso">⚠️ Priorizar fibras solúveis e reduzir colesterol dietético.</div></div>
+        </details>
+        <details class="r"><summary>🧬 HMGCR — Síntese endógena de colesterol <span class="gene-tag tag-het">Heterozigoto AG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs3846662 (AG) — alelo de impacto G</span>
+            <span class="lbl">O que é:</span><span class="val">Enzima limitante da síntese de colesterol (alvo das estatinas).</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo G eleva a expressão enzimática e a produção hepática de colesterol.</span>
+            <span class="lbl">Impacto:</span><span class="val">Eleva LDL e modula a resposta a estatinas.</span>
+          </div><div class="aviso">⚠️ Relevante para decisão terapêutica futura (resposta a estatina) — avaliar com médico.</div></div>
+        </details>
+        <details class="r"><summary>🧬 LDLR — Receptor de LDL <span class="gene-tag tag-het">Heterozigoto GT / CT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs6511720 (GT) · rs688 (CT) — alelos de impacto G, T</span>
+            <span class="lbl">O que é:</span><span class="val">Receptor que capta LDL do sangue para o fígado.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Menor expressão de receptores eleva LDL-C; rs688 associa-se a +10% colesterol em mulheres pré-menopausa.</span>
+            <span class="lbl">Impacto:</span><span class="val">Aumento de colesterol total e LDL (variantes consideradas benignas pelo ACMG).</span>
+          </div><div class="aviso">⚠️ Compõe o perfil de aumento de LDL — monitorar lipidograma.</div></div>
+        </details>
+        <details class="r"><summary>🧬 APOA4 — Metabolismo pós-prandial <span class="gene-tag tag-het">Heterozigoto TA</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs675 (TA, T347S) — alelo de impacto A</span>
+            <span class="lbl">O que é:</span><span class="val">Apolipoproteína A-IV, modula LCAT e quilomícrons.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo A eleva LDL basal e prolonga a resposta lipêmica pós-gordura.</span>
+            <span class="lbl">Impacto:</span><span class="val">Marcador de hipercolesterolemia poligênica.</span>
+          </div><div class="aviso">⚠️ Moderar gordura saturada nas refeições.</div></div>
+        </details>
+        <details class="r"><summary>🧬 APOB — Apolipoproteína B <span class="gene-tag tag-het">Heterozigoto GA</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs693 (GA) — alelo de impacto A</span>
+            <span class="lbl">O que é:</span><span class="val">Principal apolipoproteína de LDL e quilomícrons.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo A relaciona-se a susceptibilidade a aumento de LDL e apoB.</span>
+            <span class="lbl">Impacto:</span><span class="val">Contribui para elevação de LDL (variante benigna pelo ACMG).</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Ômega-3 + berberina</strong> — reduzem TG e VLDL.</span>
+          </div><div class="aviso">⚠️ ApoB é um bom marcador de risco — considerar dosá-la.</div></div>
+        </details>
+        <details class="r"><summary>🧬 PPARD — Metabolismo lipídico <span class="gene-tag tag-hom-r">Homozigoto TT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs2016520 (TT) — alelos de impacto T, C</span>
+            <span class="lbl">O que é:</span><span class="val">Receptor PPAR com papel no metabolismo de lipídios.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Em estudo de treino+dieta, homozigotos TT aumentaram colesterol e triglicérides significativamente.</span>
+            <span class="lbl">Impacto:</span><span class="val">Aumento de colesterol e triglicérides (ver também Resistência).</span>
+          </div><div class="aviso">⚠️ TT pode responder de forma menos favorável a certas dietas — acompanhar lipidograma na intervenção.</div></div>
+        </details>
+        <details class="r"><summary>🧬 PON1 — Antioxidante do HDL <span class="gene-tag tag-hom-r">Homozigoto AA</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs854560 (AA, L55M) — alelo de impacto A</span>
+            <span class="lbl">O que é:</span><span class="val">Paraoxonase-1, enzima antioxidante ligada ao HDL.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo A reduz atividade/estabilidade da PON1, comprometendo a proteção do HDL.</span>
+            <span class="lbl">Impacto:</span><span class="val">Menor funcionalidade do HDL contra oxidação lipídica.</span>
+          </div><div class="aviso">⚠️ Reforça necessidade de antioxidantes e controle do estresse oxidativo.</div></div>
+        </details>
+        <details class="v"><summary>🧬 PCSK9 — Clearance de LDL (protetor) <span class="gene-tag tag-hom">Homozigoto GG · Heterozigoto TC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs11591147 (GG, R46L LOF) · rs11206510 (TC) — impacto negativo sobre LDL (favorável)</span>
+            <span class="lbl">O que é:</span><span class="val">PCSK9 degrada receptores de LDL; variantes de perda de função aumentam a densidade de receptores.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Alelos reduzem LDL-C via maior expressão de LDLR e SORT1.</span>
+            <span class="lbl">Impacto:</span><span class="val">Proteção contra doença arterial coronariana (DAC).</span>
+          </div><div class="aviso-v aviso">✅ Fator genético protetor cardiovascular importante.</div></div>
+        </details>
+        <details class="v"><summary>🧬 PSRC1 — Regulação de SORT1 (protetor) <span class="gene-tag tag-hom">Homozigoto AA</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs599839 (AA) — impacto negativo sobre LDL (favorável)</span>
+            <span class="lbl">O que é:</span><span class="val">Locus 1p13 que regula a expressão hepática de SORT1.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo A aumenta a internalização de LDL, reduzindo a concentração plasmática.</span>
+            <span class="lbl">Impacto:</span><span class="val">Fator protetor contra hipercolesterolemia.</span>
+          </div><div class="aviso-v aviso">✅ Contribui para redução de LDL.</div></div>
+        </details>
+        <details class="v"><summary>🧬 CETP — Transferência de ésteres (↑HDL) <span class="gene-tag tag-hom">Homozigoto GG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs708272 (GG, TaqIB) — impacto negativo sobre queda de HDL (favorável)</span>
+            <span class="lbl">O que é:</span><span class="val">Proteína de transferência de ésteres de colesterol.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Menor atividade CETP mantém mais colesterol no HDL.</span>
+            <span class="lbl">Impacto:</span><span class="val">Níveis mais elevados de HDL circulante.</span>
+          </div><div class="aviso-v aviso">✅ Perfil favorável de HDL.</div></div>
+        </details>
+        <details class="v"><summary>🧬 LIPC — Lipase hepática (↑HDL) <span class="gene-tag tag-het">Heterozigoto GA / CT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs2070895 (GA) · rs1800588 (CT) — impacto negativo sobre queda de HDL (favorável)</span>
+            <span class="lbl">O que é:</span><span class="val">Lipase triglicerídea hepática.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Os alelos de impacto associam-se a HDL 3–8% mais elevado.</span>
+            <span class="lbl">Impacto:</span><span class="val">Favorável para níveis de HDL.</span>
+          </div><div class="aviso-v aviso">✅ Reforça o perfil favorável de HDL.</div></div>
+        </details>
+        <details class="v"><summary>🧬 LPL — Lipase lipoproteica (↑HDL) <span class="gene-tag tag-hom">Homozigoto TT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs13702 (TT) — impacto negativo sobre queda de HDL (favorável)</span>
+            <span class="lbl">O que é:</span><span class="val">Lipase que processa triglicerídeos e matura o HDL.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T favorece atividade enzimática otimizada e maior HDL-C.</span>
+            <span class="lbl">Impacto:</span><span class="val">Reduz probabilidade de perfil lipídico desfavorável.</span>
+          </div><div class="aviso-v aviso">✅ HDL geneticamente favorecido — contraponto protetor ao risco de LDL.</div></div>
+        </details>
+      </div>
+    </div>
+
+    <!-- ===================== CARD ESTEATOSE ===================== -->
+    <div class="card" id="card-esteatose">
+      <div class="card-hdr">
+        <div class="card-ic">🫄</div>
+        <div class="card-hdr-t"><h2>Esteatose Hepática (DHGNA)</h2><span>PNPLA3 · PEMT · GCKR</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza"></div><div class="lz lzr on"></div></div><span class="slbl" style="color:#ef4444">Alto</span></div>
+      </div>
+      <div class="card-body">
+        <details class="r"><summary>🧬 PNPLA3 — Marcador máster de esteatose <span class="gene-tag tag-het">Heterozigoto CG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs738409 (CG, I148M) — alelo de impacto G</span>
+            <span class="lbl">O que é:</span><span class="val">Gene mais relevante para acúmulo de gordura no fígado.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo G prejudica a hidrólise de triglicerídeos nos hepatócitos.</span>
+            <span class="lbl">Impacto:</span><span class="val">Favorece doença hepática gordurosa não alcoólica (DHGNA).</span>
+          </div><div class="aviso">⚠️ Evitar álcool e frutose em excesso; controlar gordura visceral protege o fígado.</div></div>
+        </details>
+        <details class="r"><summary>🧬 PEMT — Síntese de fosfatidilcolina <span class="gene-tag tag-hom-r">Homozigoto TT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs7946 (TT, V175M) — alelo de impacto T</span>
+            <span class="lbl">O que é:</span><span class="val">Enzima que sintetiza fosfatidilcolina para exportar lipídeos do fígado.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">TT reduz a síntese, dificultando a exportação de gordura hepática.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior risco de acúmulo de gordura no fígado e síndrome metabólica.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Colina</strong> (via dieta: ovos, fígado) — a demanda de colina é maior neste genótipo.</span>
+          </div><div class="aviso">⚠️ Garantir aporte adequado de colina é especialmente importante aqui.</div></div>
+        </details>
+        <details class="r"><summary>🧬 GCKR — Metabolismo hepático de carboidratos <span class="gene-tag tag-het">Heterozigoto TC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs780094 (TC) · rs1260326 (TC) — alelo de impacto T</span>
+            <span class="lbl">O que é:</span><span class="val">Regula a glicoquinase e a lipogênese de novo hepática.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T aumenta a conversão de glicose em ácidos graxos (hipertrigliceridemia).</span>
+            <span class="lbl">Impacto:</span><span class="val">Predisposição a dislipidemia aterogênica e esteatose.</span>
+          </div><div class="aviso">⚠️ Reduzir açúcares simples e frutose diminui a lipogênese hepática.</div></div>
+        </details>
+      </div>
+    </div>
+
+    <!-- ===================== CARD SÍNDROME METABÓLICA ===================== -->
+    <div class="card" id="card-sindrome">
+      <div class="card-hdr">
+        <div class="card-ic">🏥</div>
+        <div class="card-hdr-t"><h2>Síndrome Metabólica</h2><span>ADIPOQ · TCF7L2 · IRS1 · IL6 · FTO · PNPLA3 · GCKR</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza"></div><div class="lz lzr on"></div></div><span class="slbl" style="color:#ef4444">Alto</span></div>
+      </div>
+      <div class="card-body">
+        <details class="r"><summary>🧬 ADIPOQ — Adiponectina <span class="gene-tag tag-hom-r">Homozigoto GG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs17300539 (GG) — alelo de impacto G</span>
+            <span class="lbl">O que é:</span><span class="val">Produz adiponectina, hormônio que melhora sensibilidade à insulina.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">GG associa-se a maior risco de resistência à insulina e complicações metabólicas em obesos.</span>
+            <span class="lbl">Impacto:</span><span class="val">Componente central da síndrome metabólica; o alelo A protegeria contra recuperação de peso.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Berberina + ômega-3</strong> — elevam adiponectina circulante.</span>
+          </div><div class="aviso">⚠️ Perda de peso e exercício aumentam adiponectina funcional.</div></div>
+        </details>
+        <details class="r"><summary>🧬 Convergência metabólica — genes compartilhados <span class="gene-tag tag-het">Múltiplos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">Genes:</span><span class="val">TCF7L2 (CT/GT), IRS1 (TC), IL6 (CG), FTO (TA/CA), PNPLA3 (CG), GCKR (TC)</span>
+            <span class="lbl">O que é:</span><span class="val">A síndrome metabólica agrega glicemia, lipídios, pressão e adiposidade — todos com contribuição genética neste laudo.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Resistência à insulina (TCF7L2, IRS1), inflamação (IL6), adiposidade (FTO) e esteatose (PNPLA3, GCKR) convergem para o mesmo fenótipo.</span>
+            <span class="lbl">Impacto:</span><span class="val">Risco elevado e cumulativo — detalhes em Diabetes, Coração, Peso e Esteatose.</span>
+          </div><div class="aviso">⚠️ Abordagem integrada: controle glicêmico + lipídico + peso + pressão simultaneamente.</div></div>
+        </details>
+      </div>
+    </div>
+    <!-- ===================== CARD PRESSÃO ===================== -->
+    <div class="card" id="card-pressao">
+      <div class="card-hdr">
+        <div class="card-ic">🫀</div>
+        <div class="card-hdr-t"><h2>Pressão Arterial</h2><span>ACE · ATP2B1 · EDN1</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza"></div><div class="lz lzr on"></div></div><span class="slbl" style="color:#ef4444">Alto</span></div>
+      </div>
+      <div class="card-body">
+        <details class="r"><summary>🧬 ACE — Enzima conversora de angiotensina <span class="gene-tag tag-het">Heterozigoto GA</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs4343 (GA) — alelo de impacto G</span>
+            <span class="lbl">O que é:</span><span class="val">Converte angiotensina I em II (vasoconstritor potente).</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo G aumenta a atividade da ECA.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior propensão à hipertensão.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Magnésio (glicina/malato)</strong> — modula a atividade da ECA e o tônus vascular.</span>
+          </div><div class="aviso">⚠️ Controle de sódio e magnésio adequado são especialmente úteis neste perfil.</div></div>
+        </details>
+        <details class="r"><summary>🧬 ATP2B1 — Bomba de cálcio vascular <span class="gene-tag tag-hom-r">Homozigoto TT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs2681492 (TT) — alelo de impacto T</span>
+            <span class="lbl">O que é:</span><span class="val">Regula a bomba de cálcio da membrana das células musculares lisas vasculares.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">TT altera a homeostase de cálcio e aumenta a resistência periférica.</span>
+            <span class="lbl">Impacto:</span><span class="val">Um dos marcadores mais robustos de variabilidade da pressão arterial.</span>
+          </div><div class="aviso">⚠️ Homozigoto de risco — monitorar pressão arterial regularmente.</div></div>
+        </details>
+        <details class="r"><summary>🧬 EDN1 — Endotelina-1 <span class="gene-tag tag-het">Heterozigoto GT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs5370 (GT, Lys198Asn) — alelo de impacto T · gene EDN1</span>
+            <span class="lbl">O que é:</span><span class="val">Precursor da endotelina-1, potente vasoconstritor.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T eleva a proteína ativa, sobretudo sob estresse.</span>
+            <span class="lbl">Impacto:</span><span class="val">Favorece elevação da pressão sistólica.</span>
+          </div><div class="aviso">⚠️ Gestão do estresse e atividade física apoiam o tônus vascular.</div></div>
+        </details>
+      </div>
+    </div>
+
+    <!-- ===================== CARD VITAMINAS ===================== -->
+    <div class="card" id="card-vitaminas">
+      <div class="card-hdr">
+        <div class="card-ic">💊</div>
+        <div class="card-hdr-t"><h2>Vitaminas &amp; Minerais</h2><span>VDR · CYP2R1 · CYP27B1 · NADSYN1 · MTHFR · MTRR · CBS · BHMT · SLC19A1 · NBPF3 · BCMO1 · BCO1 · FUT2</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza"></div><div class="lz lzr on"></div></div><span class="slbl" style="color:#ef4444">Alto</span></div>
+      </div>
+      <div class="card-body">
+        <details class="r"><summary>🧬 Vitamina D — VDR / CYP2R1 / CYP27B1 / NADSYN1 <span class="gene-tag tag-hom-r">Múltiplos de risco</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">VDR rs1544410 (CC) · VDR ApaI rs7975232 (CA) · CYP2R1 rs10741657 (GG) · CYP27B1 rs10877012 (GG) · NADSYN1 rs12785878 (GT)</span>
+            <span class="lbl">O que é:</span><span class="val">Conjunto que regula síntese, ativação e resposta à vitamina D.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">CYP2R1 GG reduz a 25-hidroxilação; VDR CC reduz a responsividade do receptor; NADSYN1 eleva risco de insuficiência.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior susceptibilidade a níveis baixos de vitamina D e menor resposta tecidual — relevante para osso e imunidade.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Vitamina D3 + K2 (MK-7)</strong> — alvo sérico mais alto pela menor responsividade do VDR.</span>
+          </div><div class="aviso">⚠️ Dosar 25(OH)D e manter reposição orientada; K2 direciona o cálcio ao osso.</div></div>
+        </details>
+        <details class="r"><summary>🧬 Folato / Metilação — MTHFR · MTRR · CBS · BHMT · SLC19A1 <span class="gene-tag tag-het">Múltiplos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">MTHFR rs1801131 (GG) · MTRR rs1801394 (AG) · CBS rs234706 (GG) · BHMT rs3733890 (GA) · SLC19A1 rs1051266 (TC)</span>
+            <span class="lbl">O que é:</span><span class="val">Via de metilação e metabolismo do folato/homocisteína.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Reduzem a eficiência da remetilação e do transporte de folato, aumentando a dependência de folato ativo.</span>
+            <span class="lbl">Impacto:</span><span class="val">Tendência a menor disponibilidade de folato e possível elevação de homocisteína.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Metilfolato (L-5-MTHF) + metilcobalamina + B6 (P5P)</strong> — nunca ácido fólico sintético.</span>
+          </div><div class="aviso">⚠️ Priorizar folato na forma ativa (metilfolato) e monitorar homocisteína.</div></div>
+        </details>
+        <details class="r"><summary>🧬 NBPF3 — Depuração de vitamina B6 <span class="gene-tag tag-hom-r">Homozigoto CC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs4654748 (CC) — alelo de impacto C</span>
+            <span class="lbl">O que é:</span><span class="val">Locus associado à concentração plasmática de vitamina B6.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">CC reduz o nível de B6 por depuração mais eficiente.</span>
+            <span class="lbl">Impacto:</span><span class="val">Menor B6 circulante — cofator de dezenas de reações (incluindo neurotransmissores).</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Vitamina B6 na forma P5P</strong> (piridoxal-5-fosfato).</span>
+          </div><div class="aviso">⚠️ Preferir B6 ativa (P5P) para compensar a maior depuração.</div></div>
+        </details>
+        <details class="r"><summary>🧬 Vitamina A — BCMO1 / BCO1 <span class="gene-tag tag-het">Conversão reduzida</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">BCMO1 rs11645428 (GA) · rs6420424 (GA) · BCO1 rs7501331 (CT) · rs12934922 (AT)</span>
+            <span class="lbl">O que é:</span><span class="val">Enzimas que convertem betacaroteno em vitamina A (retinol).</span>
+            <span class="lbl">Mecanismo:</span><span class="val">As variantes reduzem a eficiência de conversão (até ~50–59% menor), acumulando betacaroteno.</span>
+            <span class="lbl">Impacto:</span><span class="val">Menor aproveitamento de fontes vegetais de provitamina A.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Vitamina A como retinol pré-formado</strong> — não depender apenas de betacaroteno.</span>
+          </div><div class="aviso">⚠️ Incluir fontes de retinol (ovo, laticínios, fígado) e evitar excesso isolado de betacaroteno.</div></div>
+        </details>
+        <details class="v"><summary>🧬 Vitamina B12 — FUT2 (favorável) <span class="gene-tag tag-hom">Homozigoto AA</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">FUT2 rs602662 (AA) · rs601338 (AA) — impacto negativo sobre queda de B12 (favorável)</span>
+            <span class="lbl">O que é:</span><span class="val">Fucosiltransferase que influencia absorção intestinal de B12.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Homozigotos AA tendem a maiores níveis de B12.</span>
+            <span class="lbl">Impacto:</span><span class="val">Perfil favorável para vitamina B12.</span>
+          </div><div class="aviso-v aviso">✅ Boa absorção de B12 — atenção apenas se adotar dieta vegetariana estrita.</div></div>
+        </details>
+      </div>
+    </div>
+    <!-- ===================== CARD CAFEÍNA ===================== -->
+    <div class="card" id="card-cafeina">
+      <div class="card-hdr">
+        <div class="card-ic">☕</div>
+        <div class="card-hdr-t"><h2>Cafeína &amp; Estímulo</h2><span>ADORA2A · COMT · DIO2 · DRD1 · IL1B · OXTR</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza on"></div><div class="lz lzr"></div></div><span class="slbl" style="color:#f59e0b">Atenção</span></div>
+      </div>
+      <div class="card-body">
+        <details class="a"><summary>🧬 ADORA2A — Receptor de adenosina <span class="gene-tag tag-het">Heterozigoto TC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs5751876 (TC) — alelo de impacto T</span>
+            <span class="lbl">O que é:</span><span class="val">Modula a sensibilidade do SNC à cafeína.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Favorece maior ingestão habitual para atingir o limiar de alerta.</span>
+            <span class="lbl">Impacto:</span><span class="val">Tendência a consumo elevado de café; possível efeito ansiogênico.</span>
+          </div><div class="aviso-a aviso">⚠️ Evitar cafeína após o meio da tarde para proteger o sono.</div></div>
+        </details>
+        <details class="a"><summary>🧬 COMT (rs4633) — Metabolismo de catecolaminas <span class="gene-tag tag-het">Heterozigoto CT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs4633 (CT) — alelo de impacto T</span>
+            <span class="lbl">O que é:</span><span class="val">Parte de haplótipos que determinam a atividade da COMT.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Menor degradação de catecolaminas no córtex pré-frontal.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior sensibilidade a estresse e ansiedade reativa.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Magnésio</strong> — apoia regulação do estresse (ver também SAMe em Cérebro).</span>
+          </div><div class="aviso-a aviso">⚠️ A cafeína pode acentuar a ansiedade neste perfil.</div></div>
+        </details>
+        <details class="r"><summary>🧬 DIO2 — Deiodinase e T3 cerebral <span class="gene-tag tag-hom-r">Homozigoto CC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs225014 (CC, Thr92Ala) — alelo de impacto C</span>
+            <span class="lbl">O que é:</span><span class="val">Enzima que produz T3 intracelular no SNC.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">CC gera hipofunção tireoidiana localizada no cérebro, mesmo com TSH normal.</span>
+            <span class="lbl">Impacto:</span><span class="val">Pode prejudicar cognição e bem-estar emocional.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Selênio + zinco</strong> — cofatores da conversão de hormônios tireoidianos.</span>
+          </div><div class="aviso">⚠️ Avaliar função tireoidiana (inclusive T3) se houver sintomas de fadiga/cognição.</div></div>
+        </details>
+        <details class="a"><summary>🧬 DRD1 — Receptor de dopamina D1 <span class="gene-tag tag-het">Heterozigoto GA</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs686 (GA) — alelo de impacto A</span>
+            <span class="lbl">O que é:</span><span class="val">Regula densidade de receptores D1 no estriado e córtex.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo A reduz eficiência da sinalização dopaminérgica.</span>
+            <span class="lbl">Impacto:</span><span class="val">Variações na estabilidade do humor e circuitos de recompensa.</span>
+          </div><div class="aviso-a aviso">⚠️ Atenção a padrões de recompensa (alimentar, cafeína).</div></div>
+        </details>
+        <details class="r"><summary>🧬 IL1B — Interleucina-1 beta <span class="gene-tag tag-hom-r">Homozigoto GG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs16944 (GG) — alelo de impacto G</span>
+            <span class="lbl">O que é:</span><span class="val">Citocina pró-inflamatória com efeito sobre o SNC.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">GG aumenta a transcrição, induzindo neuroinflamação e reduzindo triptofano para serotonina.</span>
+            <span class="lbl">Impacto:</span><span class="val">Estado inflamatório de baixo grau ligado a sintomas depressivos.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Ômega-3 + curcumina</strong> — reduzem neuroinflamação.</span>
+          </div><div class="aviso">⚠️ Dieta anti-inflamatória apoia humor e cognição.</div></div>
+        </details>
+        <details class="a"><summary>🧬 OXTR — Receptor de ocitocina <span class="gene-tag tag-het">Heterozigoto GA</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs2254298 (GA) — alelo de impacto A · gene OXTR (referido como OXR no laudo)</span>
+            <span class="lbl">O que é:</span><span class="val">Receptor de ocitocina, ligado ao processamento social e à amígdala.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo A associa-se a menor resiliência ao estresse em contextos desfavoráveis.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior vulnerabilidade a fenótipos depressivos sob estresse.</span>
+          </div><div class="aviso-a aviso">⚠️ Vínculos sociais e manejo do estresse são protetores neste perfil.</div></div>
+        </details>
+      </div>
+    </div>
+
+    <!-- ===================== CARD CÉREBRO ===================== -->
+    <div class="card" id="card-cerebro">
+      <div class="card-hdr">
+        <div class="card-ic">🧠</div>
+        <div class="card-hdr-t"><h2>Cérebro &amp; Humor</h2><span>APOE · COMT · MAOA · OPRM1 · BDNF · CNR1</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza on"></div><div class="lz lzr"></div></div><span class="slbl" style="color:#f59e0b">Atenção</span></div>
+      </div>
+      <div class="card-body">
+        <details class="v"><summary>🧬 APOE — Genótipo E2/E2 (protetor Alzheimer) <span class="gene-tag tag-hom">rs429358 TT · rs7412 CC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs429358 (TT) + rs7412 (CC) → haplótipo <strong>ApoE-ε2/ε2</strong></span>
+            <span class="lbl">O que é:</span><span class="val">Apolipoproteína E — o ε2 é o genótipo mais protetor contra Alzheimer.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Ausência do alelo ε4 reduz substancialmente o risco de Alzheimer de início tardio.</span>
+            <span class="lbl">Impacto:</span><span class="val">Favorável para risco neurodegenerativo; porém ε2 pode elevar LDL/triglicérides (hiperlipoproteinemia tipo III).</span>
+          </div><div class="aviso-v aviso">✅ Proteção genética contra Alzheimer — manter atenção apenas ao perfil lipídico (ver Coração).</div></div>
+        </details>
+        <details class="a"><summary>🧬 COMT (rs4680) — Val158Met <span class="gene-tag tag-het">Heterozigoto GA</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs4680 (GA, Val158Met) — alelos de impacto A, G</span>
+            <span class="lbl">O que é:</span><span class="val">Degrada dopamina no córtex pré-frontal.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Heterozigoto = perfil intermediário; o alelo A eleva dopamina e sensibilidade à dor.</span>
+            <span class="lbl">Impacto:</span><span class="val">Equilíbrio entre memória/atenção e resposta ao estresse.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>SAMe + magnésio</strong> — SAMe fornece grupos metil para a COMT.</span>
+          </div><div class="aviso-a aviso">⚠️ Perfil intermediário — gestão do estresse otimiza o desempenho cognitivo.</div></div>
+        </details>
+        <details class="a"><summary>🧬 MAOA — Metabolismo de monoaminas <span class="gene-tag tag-hom">Homozigoto TT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1137070 (TT) — alelos de impacto T, C</span>
+            <span class="lbl">O que é:</span><span class="val">Enzima que degrada dopamina, noradrenalina e serotonina.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T (maior atividade MAOA) associa-se a maior susceptibilidade a depressão, com destaque em mulheres pós-menopausa.</span>
+            <span class="lbl">Impacto:</span><span class="val">Atenção ao humor, sobretudo neste momento de vida.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>B6 (P5P) + triptofano + magnésio</strong> — apoiam síntese de serotonina.</span>
+          </div><div class="aviso-a aviso">⚠️ Suporte à serotonina e acompanhamento do humor são recomendados.</div></div>
+        </details>
+        <details class="a"><summary>🧬 OPRM1 — Receptor opioide µ <span class="gene-tag tag-het">Heterozigoto AG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1799971 (AG, c.118A&gt;G) — alelo de impacto G</span>
+            <span class="lbl">O que é:</span><span class="val">Receptor opioide ligado a recompensa, dor e dependência.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">≥1 cópia do alelo G associa-se a maior ímpeto de consumo de álcool e à sensibilidade à dor.</span>
+            <span class="lbl">Impacto:</span><span class="val">Atenção a comportamentos aditivos e ao manejo da dor.</span>
+          </div><div class="aviso-a aviso">⚠️ Moderar álcool; relevante para estratégias de controle de dor.</div></div>
+        </details>
+        <details class="v"><summary>🧬 BDNF &amp; CNR1 — Referência cruzada <span class="gene-tag tag-het">Ver Peso / Depressão</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">BDNF:</span><span class="val">rs6265 (CT, Val66Met) — memória episódica e humor; detalhado em Peso e Depressão.</span>
+            <span class="lbl">CNR1:</span><span class="val">rs1049353 (TT) — protetor contra depressão por estresse; detalhado em Peso e Depressão.</span>
+            <span class="lbl">Impacto:</span><span class="val">Ambos modulam humor e cognição além do metabolismo.</span>
+          </div><div class="aviso-v aviso">✅ CNR1 TT confere proteção contra depressão por estresse.</div></div>
+        </details>
+      </div>
+    </div>
+
+    <!-- ===================== CARD SONO ===================== -->
+    <div class="card" id="card-sono">
+      <div class="card-hdr">
+        <div class="card-ic">🌙</div>
+        <div class="card-hdr-t"><h2>Sono &amp; Ritmo Circadiano</h2><span>CLOCK · CRY1 · CRY2 · MTNR1A · PER2 · MTNR1B</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza on"></div><div class="lz lzr"></div></div><span class="slbl" style="color:#f59e0b">Atenção</span></div>
+      </div>
+      <div class="card-body">
+        <details class="a"><summary>🧬 CLOCK — Regulador circadiano máster <span class="gene-tag tag-het">Heterozigoto AG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1801260 (AG) — alelo de impacto G</span>
+            <span class="lbl">O que é:</span><span class="val">Gene central do relógio biológico.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo G associa-se a atraso de sono, maior cronotipo noturno e menor tempo de sono (≤6h).</span>
+            <span class="lbl">Impacto:</span><span class="val">Ligado a dificuldade de perda de peso e maior risco metabólico.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Melatonina + magnésio</strong> — apoiam o alinhamento circadiano.</span>
+          </div><div class="aviso-a aviso">⚠️ Higiene do sono e horários regulares são especialmente importantes.</div></div>
+        </details>
+        <details class="a"><summary>🧬 CRY1 — Componente do relógio molecular <span class="gene-tag tag-het">Heterozigoto CG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs2287161 (CG) — alelo de impacto C</span>
+            <span class="lbl">O que é:</span><span class="val">Proteína do complexo de oscilação circadiana.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo C associa-se a alterações do padrão de sono e do humor.</span>
+            <span class="lbl">Impacto:</span><span class="val">Pode influenciar cronotipo e regulação do humor.</span>
+          </div><div class="aviso-a aviso">⚠️ Exposição à luz natural pela manhã ajuda a sincronizar o relógio.</div></div>
+        </details>
+        <details class="a"><summary>🧬 CRY2 — Fase circadiana <span class="gene-tag tag-het">Heterozigoto GA</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs7123390 (GA) — alelo de impacto A</span>
+            <span class="lbl">O que é:</span><span class="val">Componente do loop de feedback do relógio molecular.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo A associa-se a atraso de fase circadiana.</span>
+            <span class="lbl">Impacto:</span><span class="val">Tendência à dessincronia com o ciclo claro-escuro (ver também Diabetes).</span>
+          </div><div class="aviso-a aviso">⚠️ Rotina de sono consistente reduz a dessincronia.</div></div>
+        </details>
+        <details class="a"><summary>🧬 MTNR1A — Receptor de melatonina 1A <span class="gene-tag tag-het">Heterozigoto CA</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs12506228 (CA) — alelo de impacto A</span>
+            <span class="lbl">O que é:</span><span class="val">Receptor de melatonina no núcleo supraquiasmático.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo A compromete a arquitetura do sono e a regulação térmica.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior dificuldade de manter o repouso alinhado.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Melatonina</strong> — apoia a sinalização do receptor.</span>
+          </div><div class="aviso-a aviso">⚠️ Ambiente escuro e reduzir telas à noite favorecem a melatonina endógena.</div></div>
+        </details>
+        <details class="a"><summary>🧬 PER2 &amp; MTNR1B — Referência cruzada <span class="gene-tag tag-hom-r">Ver Peso / Diabetes</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">PER2:</span><span class="val">rs4663302 (TT) — maior estresse dietético circadiano (detalhado em Peso).</span>
+            <span class="lbl">MTNR1B:</span><span class="val">rs10830963 (CG) — melatonina e glicemia de jejum (detalhado em Diabetes).</span>
+            <span class="lbl">Impacto:</span><span class="val">Reforçam a conexão sono–metabolismo neste perfil.</span>
+          </div><div class="aviso-a aviso">⚠️ Comer mais cedo à noite alinha metabolismo e ritmo circadiano.</div></div>
+        </details>
+      </div>
+    </div>
+
+    <!-- ===================== CARD HÁBITOS ===================== -->
+    <div class="card" id="card-habitos">
+      <div class="card-hdr">
+        <div class="card-ic">🥗</div>
+        <div class="card-hdr-t"><h2>Hábitos Alimentares</h2><span>FADS1 · PER2 · SLC2A2</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza on"></div><div class="lz lzr"></div></div><span class="slbl" style="color:#f59e0b">Atenção</span></div>
+      </div>
+      <div class="card-body">
+        <details class="a"><summary>🧬 FADS1 — Dessaturase de ácidos graxos <span class="gene-tag tag-het">Heterozigoto CT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs174546 (CT) — alelo de impacto C</span>
+            <span class="lbl">O que é:</span><span class="val">Enzima limitante na síntese de ácidos graxos poli-insaturados (EPA/DHA a partir de ALA).</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo C reduz a conversão endógena; o efeito no colesterol depende da razão ômega-3/ômega-6 da dieta.</span>
+            <span class="lbl">Impacto:</span><span class="val">Menor produção própria de EPA/DHA.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Ômega-3 EPA+DHA pré-formado</strong> — não depender da conversão de ALA vegetal.</span>
+          </div><div class="aviso-a aviso">⚠️ Preferir fontes diretas de EPA/DHA (peixe, óleo de peixe/algas).</div></div>
+        </details>
+        <details class="r"><summary>🧬 PER2 — Comportamento alimentar circadiano <span class="gene-tag tag-hom-r">Homozigoto TT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs4663302 (TT) — alelo de impacto T</span>
+            <span class="lbl">O que é:</span><span class="val">Gene circadiano ligado ao planejamento alimentar.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">TT associa-se a maior estresse dietético e menor planejamento das refeições.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior chance de abandono de dietas (ver também Peso).</span>
+          </div><div class="aviso">⚠️ Estruturar refeições e apoio contínuo aumentam a adesão.</div></div>
+        </details>
+        <details class="a"><summary>🧬 SLC2A2 (GLUT2) — Percepção de açúcar <span class="gene-tag tag-het">Heterozigoto GA</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs5400 (GA, Thr110Ile) — alelo de impacto A</span>
+            <span class="lbl">O que é:</span><span class="val">Transportador de glicose que sinaliza a ingestão de açúcar.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo A associa-se a maior consumo de açúcar.</span>
+            <span class="lbl">Impacto:</span><span class="val">Tendência a preferir/consumir mais doces.</span>
+          </div><div class="aviso-a aviso">⚠️ Estratégias de redução gradual de açúcar são especialmente úteis.</div></div>
+        </details>
+      </div>
+    </div>
+    <!-- ===================== CARD ESTRESSE OXIDATIVO ===================== -->
+    <div class="card" id="card-oxidativo">
+      <div class="card-hdr">
+        <div class="card-ic">🛡️</div>
+        <div class="card-hdr-t"><h2>Estresse Oxidativo</h2><span>SOD2 · CAT · GPX1 · NQO1 · GLO1 · IL12B · IL23R · IL6R · KLOTHO · RTEL1 · SIRT6 · TERT · IGF1R · FOXO3A · LINGO1 · UNC13A · CETP · GSTP1</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza on"></div><div class="lz lzr"></div></div><span class="slbl" style="color:#f59e0b">Atenção</span></div>
+      </div>
+      <div class="card-body">
+        <details class="a"><summary>🧬 SOD2 — Superóxido dismutase mitocondrial <span class="gene-tag tag-het">Heterozigoto AG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs4880 (AG, Val16Ala) — alelos de impacto G, A</span>
+            <span class="lbl">O que é:</span><span class="val">Enzima antioxidante da matriz mitocondrial (usa manganês).</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo A reduz a eficiência da MnSOD contra o estresse oxidativo.</span>
+            <span class="lbl">Impacto:</span><span class="val">Menor defesa antioxidante mitocondrial; também citado em Força, Resistência, Lesão e Longevidade.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>CoQ10 (ubiquinol) + manganês</strong> — Mn é cofator da SOD2.</span>
+          </div><div class="aviso-a aviso">⚠️ Gene "hub" antioxidante — reforçar CoQ10 e cofatores minerais.</div></div>
+        </details>
+        <details class="a"><summary>🧬 Enzimas antioxidantes — CAT · GPX1 · NQO1 · GLO1 <span class="gene-tag tag-het">Múltiplos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">CAT rs1001179 (CT) · GPX1 rs1050450 (GA) · NQO1 rs1800566 (GA) · GLO1 rs1130534 (TT)</span>
+            <span class="lbl">O que é:</span><span class="val">Enzimas centrais na neutralização de peróxidos e compostos dicarbonílicos.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">As variantes reduzem catalase (CAT), glutationa peroxidase (GPX1), NQO1 e glioxalase (GLO1).</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior vulnerabilidade a lesão oxidativa e por glicação.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>PQQ + NAC</strong> (ativam NQO1) e <strong>selênio</strong> (cofator da GPX1).</span>
+          </div><div class="aviso-a aviso">⚠️ Dieta rica em antioxidantes (crucíferas, polifenóis) apoia estas vias.</div></div>
+        </details>
+        <details class="a"><summary>🧬 Vias inflamatórias e ROS — IL12B · IL23R · IL6R <span class="gene-tag tag-het">Múltiplos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">IL12B rs2082412 (GG) · IL23R rs2201841 (AG) · IL6R rs2228145 (AC)</span>
+            <span class="lbl">O que é:</span><span class="val">Sinalização imune que retroalimenta a produção de espécies reativas.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">IL12B/IL23R intensificam a via inflamatória (ROS ↑); já IL6R (Asp358Ala) reduz a sinalização clássica de IL-6 (favorável).</span>
+            <span class="lbl">Impacto:</span><span class="val">Balanço inflamatório com componente de atenção (IL12B/IL23R) e um protetor (IL6R).</span>
+          </div><div class="aviso-a aviso">⚠️ Controle inflamatório via dieta e ômega-3 é favorável.</div></div>
+        </details>
+        <details class="v"><summary>🧬 Longevidade e telômeros — FOXO3A · KLOTHO · IGF1R · SIRT6 · RTEL1 · TERT <span class="gene-tag tag-het">Mistos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">Favoráveis:</span><span class="val">FOXO3A rs2802292 (GT) · rs2764264 (CT) · IGF1R rs34516635 (GG) · KLOTHO rs9536314 (TT) — reforçam defesa antioxidante e citoproteção.</span>
+            <span class="lbl">Atenção:</span><span class="val">SIRT6 rs107251 (TC) · RTEL1 rs755017 (AA) · TERT rs2242652 (GA) — modulam estabilidade telomérica.</span>
+            <span class="lbl">Impacto:</span><span class="val">Perfil de longevidade com bons ativadores (FOXO3A/KLOTHO) — detalhado no card Longevidade.</span>
+          </div><div class="aviso-v aviso">✅ FOXO3A e KLOTHO favoráveis ativam enzimas antioxidantes endógenas.</div></div>
+        </details>
+        <details class="a"><summary>🧬 Neuroproteção — LINGO1 · UNC13A <span class="gene-tag tag-het">Múltiplos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">LINGO1 rs9652490 (AG) · UNC13A rs12608932 (AC)</span>
+            <span class="lbl">O que é:</span><span class="val">Genes ligados à integridade neuronal e sináptica.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Variantes associam-se a disfunção mitocondrial secundária e vulnerabilidade a excitotoxicidade.</span>
+            <span class="lbl">Impacto:</span><span class="val">Reforçam a importância da proteção neuronal antioxidante.</span>
+          </div><div class="aviso-a aviso">⚠️ Ômega-3 e antioxidantes apoiam a saúde neuronal.</div></div>
+        </details>
+        <details class="v"><summary>🧬 Protetores adicionais — CETP · GSTP1 <span class="gene-tag tag-het">Favoráveis</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">CETP rs5882 (GA, Ile405Val) · GSTP1 rs1695 (AG)</span>
+            <span class="lbl">O que é:</span><span class="val">CETP eleva HDL (favorece PON1); GSTP1 participa da conjugação de espécies reativas.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Maior HDL potencializa a proteção contra peroxidação de LDL.</span>
+            <span class="lbl">Impacto:</span><span class="val">Componentes protetores no balanço redox.</span>
+          </div><div class="aviso-v aviso">✅ Contraponto favorável ao estresse oxidativo.</div></div>
+        </details>
+      </div>
+    </div>
+
+    <!-- ===================== CARD DESINTOXICAÇÃO ===================== -->
+    <div class="card" id="card-detox">
+      <div class="card-hdr">
+        <div class="card-ic">🧪</div>
+        <div class="card-hdr-t"><h2>Desintoxicação (Fase I/II)</h2><span>EPHX1 · GSTP1 · NAT2 · SUOX</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza on"></div><div class="lz lzr"></div></div><span class="slbl" style="color:#f59e0b">Atenção</span></div>
+      </div>
+      <div class="card-body">
+        <details class="a"><summary>🧬 EPHX1 — Epóxido hidrolase <span class="gene-tag tag-het">Heterozigoto TC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1051740 (TC, Tyr113His) — alelo de impacto C</span>
+            <span class="lbl">O que é:</span><span class="val">Ativa/desintoxica compostos exógenos (ex: hidrocarbonetos aromáticos).</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo C resulta em atividade enzimática diminuída.</span>
+            <span class="lbl">Impacto:</span><span class="val">Menor capacidade de desintoxicação de fase I.</span>
+          </div><div class="aviso-a aviso">⚠️ Reduzir exposição a poluentes e apoiar detox hepática nutricional.</div></div>
+        </details>
+        <details class="a"><summary>🧬 GSTP1 — Glutationa S-transferase <span class="gene-tag tag-het">Heterozigoto CT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1138272 (CT) — alelo de impacto T</span>
+            <span class="lbl">O que é:</span><span class="val">Enzima de fase II que neutraliza toxinas e radicais livres.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T reduz a estabilidade e a eficiência catalítica.</span>
+            <span class="lbl">Impacto:</span><span class="val">Menor capacidade de desintoxicação de fase II.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>NAC + glutationa lipossomal</strong> — apoiam a via da glutationa.</span>
+          </div><div class="aviso-a aviso">⚠️ Crucíferas (sulforafano) induzem enzimas de fase II.</div></div>
+        </details>
+        <details class="a"><summary>🧬 NAT2 — Acetilador lento <span class="gene-tag tag-hom">Homozigoto AA</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1495741 (AA) — alelo de impacto A</span>
+            <span class="lbl">O que é:</span><span class="val">Marcador do fenótipo de acetilação (biotransformação de xenobióticos).</span>
+            <span class="lbl">Mecanismo:</span><span class="val">AA indica acetilador lento, com biotransformação mais lenta.</span>
+            <span class="lbl">Impacto:</span><span class="val">Eliminação menos eficiente de certos compostos e fármacos.</span>
+          </div><div class="aviso-a aviso">⚠️ Relevante para tolerância a alguns medicamentos — informar prescritores.</div></div>
+        </details>
+        <details class="a"><summary>🧬 SUOX — Sulfito oxidase <span class="gene-tag tag-hom">Homozigoto CC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs773115 (CC) — alelo de impacto C</span>
+            <span class="lbl">O que é:</span><span class="val">Enzima que converte sulfitos em sulfatos.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo C reduz a eficiência da sulfito oxidase.</span>
+            <span class="lbl">Impacto:</span><span class="val">Menor capacidade de desintoxicar compostos sulfurados (ex: sulfitos de conservantes/vinhos).</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Molibdênio</strong> — cofator da sulfito oxidase.</span>
+          </div><div class="aviso-a aviso">⚠️ Possível maior sensibilidade a sulfitos (vinhos, conservantes).</div></div>
+        </details>
+      </div>
+    </div>
+
+    <!-- ===================== CARD FERRO ===================== -->
+    <div class="card" id="card-ferro">
+      <div class="card-hdr">
+        <div class="card-ic">⚙️</div>
+        <div class="card-hdr-t"><h2>Metabolismo do Ferro</h2><span>TF (TRF) · HFE · TMPRSS6</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza on"></div><div class="lz lzr"></div></div><span class="slbl" style="color:#f59e0b">Atenção</span></div>
+      </div>
+      <div class="card-body">
+        <details class="a"><summary>🧬 TF (TRF) — Transferrina <span class="gene-tag tag-het">Heterozigoto CT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs3817672 (CT) — alelo de impacto T · gene TF (transferrina)</span>
+            <span class="lbl">O que é:</span><span class="val">Proteína transportadora de ferro no sangue.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T correlaciona-se a maior ferro sérico e saturação da transferrina.</span>
+            <span class="lbl">Impacto:</span><span class="val">Tendência a maior absorção/reciclagem de ferro.</span>
+          </div><div class="aviso-a aviso">⚠️ Monitorar ferritina e saturação — evitar suplementar ferro sem indicação.</div></div>
+        </details>
+        <details class="a"><summary>🧬 HFE — Regulação da absorção de ferro <span class="gene-tag tag-hom">Homozigoto CC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1799945 (CC, His63Asp) — alelos de impacto G, C</span>
+            <span class="lbl">O que é:</span><span class="val">Modula a absorção de ferro (variante ligada à hemocromatose branda quando presente o alelo G).</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Ausente o alelo G (CC), o alelo C associa-se a menor hemoglobina/ferritina e predisposição à anemia.</span>
+            <span class="lbl">Impacto:</span><span class="val">Perfil oposto à sobrecarga de ferro — atenção a anemia.</span>
+          </div><div class="aviso-a aviso">⚠️ Vigiar sinais de deficiência de ferro (fadiga, palidez).</div></div>
+        </details>
+        <details class="a"><summary>🧬 TMPRSS6 — Hepcidina e absorção de ferro <span class="gene-tag tag-het">Heterozigoto GA / AG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs4820268 (GA) · rs855791 (AG) — alelos de impacto G, A</span>
+            <span class="lbl">O que é:</span><span class="val">Serina protease que regula a hepcidina (controla absorção de ferro).</span>
+            <span class="lbl">Mecanismo:</span><span class="val">As variantes associam-se a menores parâmetros eritrocitários e menor ferritina.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior hepcidina → menor absorção de ferro; risco de anemia ferropriva.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Ferro</strong> — apenas com ferritina baixa confirmada (&lt;30) e sob orientação; vitamina C melhora a absorção.</span>
+          </div><div class="aviso-a aviso">⚠️ Não suplementar ferro empiricamente — confirmar por exames.</div></div>
+        </details>
+      </div>
+    </div>
+
+    <!-- ===================== CARD INTOLERÂNCIAS ===================== -->
+    <div class="card" id="card-intolerancia">
+      <div class="card-hdr">
+        <div class="card-ic">🥛</div>
+        <div class="card-hdr-t"><h2>Intolerâncias Alimentares</h2><span>MCM6/LCT · HLA-DRA · HLA-DQ · SH2B3</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza on"></div><div class="lz lzr"></div></div><span class="slbl" style="color:#f59e0b">Atenção</span></div>
+      </div>
+      <div class="card-body">
+        <details class="r"><summary>🧬 MCM6 / LCT — Intolerância à lactose <span class="gene-tag tag-hom-r">Homozigoto GG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs4988235 (GG) — alelo de impacto G · próximo ao gene da lactase (LCT)</span>
+            <span class="lbl">O que é:</span><span class="val">Controla a persistência da lactase na vida adulta.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">GG associa-se a menor produção de lactase (não-persistência).</span>
+            <span class="lbl">Impacto:</span><span class="val">Alta probabilidade de intolerância à lactose na idade adulta.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Lactase (enzima) + probiótico</strong> — degradam a lactose.</span>
+          </div><div class="aviso">⚠️ Preferir laticínios sem lactose ou usar lactase; monitorar sintomas digestivos.</div></div>
+        </details>
+        <details class="a"><summary>🧬 Sensibilidade ao glúten — HLA-DRA / HLA-DQ / SH2B3 <span class="gene-tag tag-het">Múltiplos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">HLA-DRA rs2395182 (GT) · rs4713586 (AA, haplótipo HLA-DQ) · SH2B3 rs3184504 (TT)</span>
+            <span class="lbl">O que é:</span><span class="val">Loci de susceptibilidade à doença celíaca (HLA classe II).</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Os haplótipos HLA-DQ2.2/DQ4 e SH2B3 conferem maior susceptibilidade.</span>
+            <span class="lbl">Impacto:</span><span class="val">Predisposição aumentada — não é diagnóstico (ver card Doença Celíaca).</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>L-glutamina + enzimas digestivas</strong> — apoiam a mucosa intestinal.</span>
+          </div><div class="aviso-a aviso">⚠️ Predisposição genética não confirma celíaca — avaliar clinicamente se houver sintomas.</div></div>
+        </details>
+      </div>
+    </div>
+    <!-- ===================== CARD FORÇA ===================== -->
+    <div class="card" id="card-forca">
+      <div class="card-hdr">
+        <div class="card-ic">🏋️</div>
+        <div class="card-hdr-t"><h2>Performance de Força</h2><span>ACTN3 · ADRB2 · IGF1 · IL6 · MTHFR · PPARA · SLC16A1 · SOD2</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza on"></div><div class="lz lzr"></div></div><span class="slbl" style="color:#f59e0b">Perfil de Força</span></div>
+      </div>
+      <div class="card-body">
+        <details class="v"><summary>🧬 ACTN3 — "Gene da velocidade/força" <span class="gene-tag tag-het">Heterozigoto CT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1815739 (CT) — alelo de impacto C (R577)</span>
+            <span class="lbl">O que é:</span><span class="val">Alfa-actinina-3, expressa em fibras de contração rápida.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo C preserva a proteína nas fibras rápidas (força/potência); associado a maior testosterona em atletas.</span>
+            <span class="lbl">Impacto:</span><span class="val">Presença do alelo C favorece força e hipertrofia.</span>
+          </div><div class="aviso-v aviso">✅ Perfil compatível com bom aproveitamento de treino de força.</div></div>
+        </details>
+        <details class="v"><summary>🧬 ADRB2 — Receptor beta-2 (força) <span class="gene-tag tag-hom">GG · GC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1042713 (GG, Gly16Arg) · rs1042714 (GC, Gln27Glu) — alelo de impacto G</span>
+            <span class="lbl">O que é:</span><span class="val">Receptor adrenérgico com propriedades anabólicas.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo G é mais frequente em atletas de força.</span>
+            <span class="lbl">Impacto:</span><span class="val">Favorece perfil de força (atenção: rs1042713 GG também eleva resistência à insulina).</span>
+          </div><div class="aviso-a aviso">⚠️ Vantagem para força, mas o mesmo genótipo pede atenção metabólica (ver Diabetes).</div></div>
+        </details>
+        <details class="v"><summary>🧬 IGF1 — Fator de crescimento e hipertrofia <span class="gene-tag tag-het">Heterozigoto AG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs35767 (AG) — alelo de impacto A</span>
+            <span class="lbl">O que é:</span><span class="val">Induz hipertrofia do músculo esquelético.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo A possivelmente aumenta massa muscular (mais frequente em atletas de força de elite).</span>
+            <span class="lbl">Impacto:</span><span class="val">Favorável ao ganho de massa muscular.</span>
+          </div><div class="aviso-v aviso">✅ Bom potencial de resposta hipertrófica ao treino resistido.</div></div>
+        </details>
+        <details class="a"><summary>🧬 IL6 (força) · MTHFR (força) <span class="gene-tag tag-het">Múltiplos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">IL6 rs1800795 (CG) · MTHFR rs1801131 (GG)</span>
+            <span class="lbl">O que é:</span><span class="val">IL6 participa da hipertrofia e homeostase da glicose no exercício; MTHFR G é mais frequente em atletas de força.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Ambos os alelos de impacto (G) foram associados a maior frequência em atletas de força/sprint.</span>
+            <span class="lbl">Impacto:</span><span class="val">Contribuem para o perfil de força (IL6 detalhada em Diabetes; MTHFR em Vitaminas).</span>
+          </div><div class="aviso-a aviso">⚠️ Recuperação com controle inflamatório e metilação otimizada.</div></div>
+        </details>
+        <details class="a"><summary>🧬 PPARA · SLC16A1 · SOD2 (força) <span class="gene-tag tag-het">Múltiplos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">PPARA rs4253778 (GC) · SLC16A1 rs1049434 (AT) · SOD2 rs4880 (AG)</span>
+            <span class="lbl">O que é:</span><span class="val">PPARA C associa-se a maior potência/massa; SLC16A1 T a maior acúmulo de lactato (velocidade/potência); SOD2 à recuperação.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Perfil misto que sustenta potência, com atenção ao acúmulo de lactato.</span>
+            <span class="lbl">Impacto:</span><span class="val">Reforça o predomínio de força (detalhes em Resistência e Lesão).</span>
+          </div><div class="aviso-a aviso">⚠️ Controlar volume/intensidade para gerenciar lactato e dano muscular.</div></div>
+        </details>
+      </div>
+    </div>
+
+    <!-- ===================== CARD LESÃO ===================== -->
+    <div class="card" id="card-lesao">
+      <div class="card-hdr">
+        <div class="card-ic">🤕</div>
+        <div class="card-hdr-t"><h2>Lesão &amp; Recuperação Muscular</h2><span>MMP12 · SLC16A1 · SLC30A8 · SOD2</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza on"></div><div class="lz lzr"></div></div><span class="slbl" style="color:#f59e0b">Atenção</span></div>
+      </div>
+      <div class="card-body">
+        <details class="r"><summary>🧬 MMP12 — Remodelação tecidual <span class="gene-tag tag-hom-r">Homozigoto TT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs2276109 (TT) — alelo de impacto T</span>
+            <span class="lbl">O que é:</span><span class="val">Elastase de macrófagos que remodela a matriz tecidual.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T predispõe a lesões ligamentares por degradação proteica mais agressiva.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior predisposição a lesões de tendão/ligamento.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Colágeno hidrolisado + vitamina C</strong> — apoiam a matriz de tendões e ligamentos.</span>
+          </div><div class="aviso">⚠️ Aquecimento, progressão de carga e fortalecimento articular são preventivos.</div></div>
+        </details>
+        <details class="a"><summary>🧬 SLC16A1 (MCT1) — Transporte de lactato <span class="gene-tag tag-het">Heterozigoto AT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1049434 (AT, Asp490Glu) — alelos de impacto A, T</span>
+            <span class="lbl">O que é:</span><span class="val">Transportador que leva lactato para dentro dos miócitos para oxidação.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T reduz o transporte de lactato (~60–65%), aumentando o acúmulo pós-treino de força.</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior acúmulo de lactato — atenção à recuperação (ver Força e Resistência).</span>
+          </div><div class="aviso-a aviso">⚠️ Recuperação ativa e hidratação ajudam no clearance de lactato.</div></div>
+        </details>
+        <details class="v"><summary>🧬 SLC30A8 — Recuperação muscular (protetor) <span class="gene-tag tag-hom">Homozigoto TT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs13266634 (TT, Arg276Trp) — impacto negativo sobre lesão (favorável)</span>
+            <span class="lbl">O que é:</span><span class="val">Transportador de zinco das células beta, com comunicação músculo–pâncreas.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">TT associou-se a menor dor, menor perda de força e menor CK pós-exercício.</span>
+            <span class="lbl">Impacto:</span><span class="val">Favorável à recuperação muscular.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Zinco quelado (bisglicinato)</strong> — apoia o transporte pancreático de zinco.</span>
+          </div><div class="aviso-v aviso">✅ Boa recuperação; zinco adequado apoia a função beta-pancreática.</div></div>
+        </details>
+        <details class="v"><summary>🧬 SOD2 — Dano muscular oxidativo <span class="gene-tag tag-het">Heterozigoto AG</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs4880 (AG) — alelos de impacto G, A</span>
+            <span class="lbl">O que é:</span><span class="val">Antioxidante mitocondrial que reduz dano muscular pós-exercício.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Homozigotos GG têm menor CK/creatinina pós-exercício; o perfil AG é intermediário.</span>
+            <span class="lbl">Impacto:</span><span class="val">Recuperação intermediária — reforçar antioxidantes.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>CoQ10 + manganês</strong> — cofatores da SOD2.</span>
+          </div><div class="aviso-a aviso">⚠️ Antioxidantes apoiam a recuperação (ver também Estresse Oxidativo).</div></div>
+        </details>
+      </div>
+    </div>
+    <!-- ===================== CARD ALZHEIMER ===================== -->
+    <div class="card" id="card-alzheimer">
+      <div class="card-hdr">
+        <div class="card-ic">🧩</div>
+        <div class="card-hdr-t"><h2>Alzheimer &amp; Neuroproteção</h2><span>APOE · BDNF · MTHFR · IL6</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza on"></div><div class="lz lzr"></div></div><span class="slbl" style="color:#f59e0b">Atenção</span></div>
+      </div>
+      <div class="card-body">
+        <details class="v"><summary>🧬 APOE — ε2/ε2 protetor <span class="gene-tag tag-hom">rs429358 TT · rs7412 CC</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs429358 (TT) + rs7412 (CC) → <strong>ApoE-ε2/ε2</strong></span>
+            <span class="lbl">O que é:</span><span class="val">O genótipo ε2 é o mais protetor contra Alzheimer de início tardio.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">A ausência do alelo ε4 reduz o risco neurodegenerativo.</span>
+            <span class="lbl">Impacto:</span><span class="val">Fator genético favorável para Alzheimer (atenção apenas ao perfil lipídico do ε2).</span>
+          </div><div class="aviso-v aviso">✅ Proteção genética relevante contra Alzheimer.</div></div>
+        </details>
+        <details class="a"><summary>🧬 BDNF · MTHFR · IL6 — Cofatores neuroprotetores <span class="gene-tag tag-het">Múltiplos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">BDNF rs6265 (CT) · MTHFR rs1801131 (GG) · IL6 rs1800795 (CG)</span>
+            <span class="lbl">O que é:</span><span class="val">BDNF sustenta plasticidade; MTHFR/metilação controla homocisteína; IL6 modula neuroinflamação.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Homocisteína elevada e neuroinflamação são fatores modificáveis de risco cognitivo.</span>
+            <span class="lbl">Impacto:</span><span class="val">Atenção à metilação e à inflamação para proteção cognitiva.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Metilfolato + metilcobalamina + ômega-3 DHA</strong> — controlam homocisteína e nutrem o cérebro.</span>
+          </div><div class="aviso-a aviso">⚠️ Exercício aeróbico + DHA + metilação otimizada são neuroprotetores.</div></div>
+        </details>
+      </div>
+    </div>
+
+    <!-- ===================== CARD CÂNCER ===================== -->
+    <div class="card" id="card-cancer">
+      <div class="card-hdr">
+        <div class="card-ic">🎗️</div>
+        <div class="card-hdr-t"><h2>Câncer — Detox &amp; Antioxidação</h2><span>GSTP1 · NQO1 · EPHX1 · VDR · MTHFR · IL6 · FADS1</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza on"></div><div class="lz lzr"></div></div><span class="slbl" style="color:#f59e0b">Atenção</span></div>
+      </div>
+      <div class="card-body">
+        <details class="a"><summary>🧬 GSTP1 · NQO1 · EPHX1 — Defesa contra carcinógenos <span class="gene-tag tag-het">Múltiplos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">GSTP1 rs1695 (AG) · rs1138272 (CT) · NQO1 rs1800566 (GA) · EPHX1 rs1051740 (TC)</span>
+            <span class="lbl">O que é:</span><span class="val">Enzimas de desintoxicação e neutralização de espécies reativas ligadas à carcinogênese.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Variantes reduzem a eficiência de detox de fase I/II; GSTP1 foi estudado em risco de melanoma.</span>
+            <span class="lbl">Impacto:</span><span class="val">Menor capacidade de neutralizar carcinógenos — fator modificável por dieta e ambiente.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>NAC + sulforafano (crucíferas) + PQQ</strong> — apoiam detox e NQO1.</span>
+          </div><div class="aviso-a aviso">⚠️ Rastreamento oncológico de rotina e fotoproteção (pele) permanecem essenciais.</div></div>
+        </details>
+        <details class="a"><summary>🧬 VDR · MTHFR · IL6 · FADS1 — Modulação de risco <span class="gene-tag tag-het">Múltiplos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">VDR rs1544410 (CC) · MTHFR rs1801131 (GG) · IL6 rs1800795 (CG) · FADS1 rs174546 (CT)</span>
+            <span class="lbl">O que é:</span><span class="val">Vitamina D (VDR), metilação (MTHFR), inflamação (IL6) e ácidos graxos (FADS1) influenciam proliferação celular.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Deficiência de vitamina D, hipometilação e inflamação crônica são fatores associados a risco tumoral.</span>
+            <span class="lbl">Impacto:</span><span class="val">Reforçam a importância de vitamina D adequada, metilação e controle inflamatório.</span>
+          </div><div class="aviso-a aviso">⚠️ Este card é informativo e não diagnóstico — manter check-ups e exames de rotina.</div></div>
+        </details>
+      </div>
+    </div>
+
+    <!-- ===================== CARD DEPRESSÃO ===================== -->
+    <div class="card" id="card-depressao">
+      <div class="card-hdr">
+        <div class="card-ic">💭</div>
+        <div class="card-hdr-t"><h2>Depressão &amp; Ansiedade</h2><span>BDNF · MAOA · COMT · OPRM1 · CNR1 · CRY1 · IL1B</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza on"></div><div class="lz lzr"></div></div><span class="slbl" style="color:#f59e0b">Atenção</span></div>
+      </div>
+      <div class="card-body">
+        <details class="a"><summary>🧬 MAOA · BDNF — Serotonina e plasticidade <span class="gene-tag tag-hom">Múltiplos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">MAOA rs1137070 (TT) · BDNF rs6265 (CT, Val66Met)</span>
+            <span class="lbl">O que é:</span><span class="val">MAOA degrada monoaminas; BDNF sustenta plasticidade e humor.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T de MAOA (alta atividade) eleva susceptibilidade à depressão em mulheres pós-menopausa; BDNF Met afeta memória episódica.</span>
+            <span class="lbl">Impacto:</span><span class="val">Atenção ao humor, sobretudo neste momento de vida.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>B6 (P5P) + triptofano/5-HTP + magnésio + ômega-3 DHA</strong>.</span>
+          </div><div class="aviso-a aviso">⚠️ Suporte à serotonina, exercício e acompanhamento do humor são recomendados.</div></div>
+        </details>
+        <details class="a"><summary>🧬 COMT · OPRM1 · CRY1 · IL1B — Estresse e neuroinflamação <span class="gene-tag tag-het">Múltiplos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">COMT rs4680 (GA) / rs4633 (CT) · OPRM1 rs1799971 (AG) · CRY1 rs2287161 (CG) · IL1B rs16944 (GG)</span>
+            <span class="lbl">O que é:</span><span class="val">Regulam resposta ao estresse, recompensa, ritmo do humor e neuroinflamação.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">IL1B GG reduz triptofano para serotonina; COMT/OPRM1 modulam estresse e recompensa; CRY1 liga humor ao sono.</span>
+            <span class="lbl">Impacto:</span><span class="val">Vulnerabilidade a ansiedade reativa e sintomas depressivos sob estresse.</span>
+          </div><div class="aviso-a aviso">⚠️ Manejo do estresse, sono e dieta anti-inflamatória são protetores.</div></div>
+        </details>
+        <details class="v"><summary>🧬 CNR1 — Fator protetor <span class="gene-tag tag-hom">Homozigoto TT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1049353 (TT) — impacto negativo sobre distúrbio de humor (favorável)</span>
+            <span class="lbl">O que é:</span><span class="val">Receptor canabinoide ligado ao humor.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T confere proteção contra depressão por estresse.</span>
+            <span class="lbl">Impacto:</span><span class="val">Componente genético favorável ao humor.</span>
+          </div><div class="aviso-v aviso">✅ Fator protetor dentro do perfil emocional.</div></div>
+        </details>
+      </div>
+    </div>
+
+    <!-- ===================== CARD DOENÇA CELÍACA ===================== -->
+    <div class="card" id="card-celiaca">
+      <div class="card-hdr">
+        <div class="card-ic">🌾</div>
+        <div class="card-hdr-t"><h2>Doença Celíaca</h2><span>HLA-DRA · HLA-DQ · SH2B3 · MTHFR</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv"></div><div class="lz lza on"></div><div class="lz lzr"></div></div><span class="slbl" style="color:#f59e0b">Atenção</span></div>
+      </div>
+      <div class="card-body">
+        <details class="a"><summary>🧬 HLA-DRA / HLA-DQ — Susceptibilidade HLA <span class="gene-tag tag-het">Heterozigoto GT / AA</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">HLA-DRA rs2395182 (GT) · rs4713586 (AA) — haplótipos HLA-DQ2.2 / DQ4</span>
+            <span class="lbl">O que é:</span><span class="val">Genes HLA classe II centrais na susceptibilidade à doença celíaca.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Os haplótipos de risco apresentam o glúten ao sistema imune de forma mais reativa.</span>
+            <span class="lbl">Impacto:</span><span class="val">Predisposição aumentada — não confirma diagnóstico.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>L-glutamina + enzimas digestivas</strong> — apoiam a mucosa se houver sensibilidade.</span>
+          </div><div class="aviso-a aviso">⚠️ Se houver sintomas, investigar com sorologia e avaliação médica antes de retirar glúten.</div></div>
+        </details>
+        <details class="a"><summary>🧬 SH2B3 · MTHFR — Autoimunidade e mucosa <span class="gene-tag tag-hom">Múltiplos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">SH2B3 rs3184504 (TT) · MTHFR rs1801131 (GG)</span>
+            <span class="lbl">O que é:</span><span class="val">SH2B3 associa-se a doença celíaca e diabetes tipo 1; MTHFR liga-se a demanda de folato (maior em enteropatias).</span>
+            <span class="lbl">Mecanismo:</span><span class="val">TT de SH2B3 aumenta susceptibilidade autoimune.</span>
+            <span class="lbl">Impacto:</span><span class="val">Reforça atenção à saúde intestinal e ao status de folato.</span>
+          </div><div class="aviso-a aviso">⚠️ Em caso de má absorção, monitorar folato, B12 e ferro.</div></div>
+        </details>
+      </div>
+    </div>
+    <!-- ===================== CARD RESISTÊNCIA ===================== -->
+    <div class="card" id="card-resistencia">
+      <div class="card-hdr">
+        <div class="card-ic">🏃</div>
+        <div class="card-hdr-t"><h2>Performance de Resistência</h2><span>BDKRB2 · COL5A1 · HIF1A · NOS3 · PPARA · PPARD · SLC16A1 · SOD2 · VEGFA</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv on"></div><div class="lz lza"></div><div class="lz lzr"></div></div><span class="slbl" style="color:#22c55e">Favorável</span></div>
+      </div>
+      <div class="card-body">
+        <details class="v"><summary>🧬 BDKRB2 — Receptor de bradicinina <span class="gene-tag tag-hom">Homozigoto TT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs1799722 (TT) — alelo de impacto T</span>
+            <span class="lbl">O que é:</span><span class="val">Envolvido na captação de glicose muscular no exercício.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T aumenta a transcrição e está super-representado em atletas de resistência.</span>
+            <span class="lbl">Impacto:</span><span class="val">Favorável à performance de resistência.</span>
+          </div><div class="aviso-v aviso">✅ Perfil favorável para atividades aeróbicas.</div></div>
+        </details>
+        <details class="v"><summary>🧬 HIF1A · NOS3 · VEGFA — Angiogênese e O₂ <span class="gene-tag tag-hom">Múltiplos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">HIF1A rs11549465 (CC) · NOS3 rs1799983 (TG) · VEGFA rs2010963 (CG)</span>
+            <span class="lbl">O que é:</span><span class="val">Regulam resposta à hipóxia, óxido nítrico e angiogênese — chaves da adaptação aeróbica.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo C de HIF1A e de VEGFA é mais frequente em atletas de resistência; NOS3 melhora vasodilatação.</span>
+            <span class="lbl">Impacto:</span><span class="val">Favoráveis à captação de oxigênio e performance aeróbica.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Beterraba/nitrato dietético</strong> — potencializa a via do óxido nítrico (NOS3).</span>
+          </div><div class="aviso-v aviso">✅ Boa base genética para condicionamento aeróbico.</div></div>
+        </details>
+        <details class="v"><summary>🧬 PPARA · PPARD — Metabolismo oxidativo <span class="gene-tag tag-het">Múltiplos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">PPARA rs4253778 (GC) · PPARD rs2016520 (TT) · rs2267668 (AA)</span>
+            <span class="lbl">O que é:</span><span class="val">Reguladores da oxidação de gorduras e biogênese mitocondrial.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">PPARD rs2267668 (AA) é prevalente em atletas de endurance de elite (maior oxidação de gordura).</span>
+            <span class="lbl">Impacto:</span><span class="val">Favorecem resistência aeróbica e eficiência energética (PPARD TT já visto em Coração).</span>
+          </div><div class="aviso-v aviso">✅ Boa capacidade de usar gordura como combustível em esforço prolongado.</div></div>
+        </details>
+        <details class="v"><summary>🧬 COL5A1 · SLC16A1 · SOD2 — Tecido e lactato <span class="gene-tag tag-het">Múltiplos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">COL5A1 / LOC101448202 rs12722 (CT) · SLC16A1 rs1049434 (AT) · SOD2 rs4880 (AG)</span>
+            <span class="lbl">O que é:</span><span class="val">COL5A1 (colágeno tipo V) influencia flexibilidade e economia de corrida; SLC16A1 o transporte de lactato; SOD2 a recuperação.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T de COL5A1 associa-se a melhores tempos de corrida em provas longas.</span>
+            <span class="lbl">Impacto:</span><span class="val">Perfil de tecido conjuntivo favorável à economia de corrida.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Colágeno + vitamina C</strong> — apoiam tendões e ligamentos.</span>
+          </div><div class="aviso-v aviso">✅ Combinar resistência com trabalho de mobilidade otimiza a economia de movimento.</div></div>
+        </details>
+      </div>
+    </div>
+
+    <!-- ===================== CARD LONGEVIDADE ===================== -->
+    <div class="card" id="card-longevidade">
+      <div class="card-hdr">
+        <div class="card-ic">⏳</div>
+        <div class="card-hdr-t"><h2>Longevidade &amp; Envelhecimento</h2><span>FOXO3A · KLOTHO · IGF1R · SIRT6 · RTEL1 · TERT · MACROH2A2 · MC1R · SOD2</span></div>
+        <div class="sml"><div class="sem"><div class="lz lzv on"></div><div class="lz lza"></div><div class="lz lzr"></div></div><span class="slbl" style="color:#22c55e">Favorável</span></div>
+      </div>
+      <div class="card-body">
+        <details class="v"><summary>🧬 FOXO3A — Gene da longevidade <span class="gene-tag tag-het">Heterozigoto GT / CT</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">rs2802292 (GT) · rs2764264 (CT) — alelo de impacto T (favorável)</span>
+            <span class="lbl">O que é:</span><span class="val">Fator de transcrição forkhead ligado à longevidade em várias populações.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">O alelo T ativa genes citoprotetores e enzimas antioxidantes (como a catalase).</span>
+            <span class="lbl">Impacto:</span><span class="val">Maior resiliência celular ao estresse e proteção do DNA.</span>
+          </div><div class="aviso-v aviso">✅ Fator genético favorável de longevidade e proteção celular.</div></div>
+        </details>
+        <details class="v"><summary>🧬 KLOTHO · IGF1R — Sinalização de longevidade <span class="gene-tag tag-hom">Múltiplos</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">KLOTHO rs9536314 (TT) · IGF1R rs34516635 (GG)</span>
+            <span class="lbl">O que é:</span><span class="val">KLOTHO regula sinalização de IGF e superóxido dismutases; IGF1R modula a via PI3K/Akt-FOXO.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Favorecem a expressão de enzimas antioxidantes e a homeostase redox.</span>
+            <span class="lbl">Impacto:</span><span class="val">Componentes favoráveis à proteção contra dano oxidativo.</span>
+          </div><div class="aviso-v aviso">✅ Reforçam a defesa antioxidante endógena.</div></div>
+        </details>
+        <details class="a"><summary>🧬 Telômeros — SIRT6 · RTEL1 · TERT <span class="gene-tag tag-het">Atenção</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">SIRT6 rs107251 (TC) · RTEL1 rs755017 (AA) · TERT rs2242652 (GA)</span>
+            <span class="lbl">O que é:</span><span class="val">Genes de manutenção telomérica e reparo do DNA.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Algumas variantes associam-se a encurtamento telomérico ou menor expressão de sirtuína nuclear.</span>
+            <span class="lbl">Impacto:</span><span class="val">Atenção à estabilidade telomérica — favorecida por bons hábitos e antioxidantes.</span>
+          </div><div class="aviso-a aviso">⚠️ Sono, exercício e controle do estresse oxidativo preservam telômeros.</div></div>
+        </details>
+        <details class="a"><summary>🧬 Envelhecimento cutâneo — MACROH2A2 · MC1R · SOD2 <span class="gene-tag tag-het">Pele</span></summary>
+          <div class="gene-body"><div class="gene-info">
+            <span class="lbl">SNPs:</span><span class="val">MACROH2A2 rs4746957 (GA) · MC1R rs4268748 (CC) · SOD2 rs4880 (AG)</span>
+            <span class="lbl">O que é:</span><span class="val">Ligados à percepção de idade facial, manchas e firmeza da pele.</span>
+            <span class="lbl">Mecanismo:</span><span class="val">Variantes associam-se a maior profundidade de rugas, manchas pigmentadas e menor defesa antioxidante cutânea.</span>
+            <span class="lbl">Impacto:</span><span class="val">Atenção ao fotoenvelhecimento — modificável com cuidado dermatológico.</span>
+            <span class="lbl">💊 Suplemento:</span><span class="val"><strong>Vitamina C + colágeno + antioxidantes tópicos</strong> e fotoproteção diária.</span>
+          </div><div class="aviso-a aviso">⚠️ Fotoproteção rigorosa é a medida mais eficaz contra o envelhecimento cutâneo.</div></div>
+        </details>
+      </div>
+    </div>
+  </div><!-- fecha .grid -->
+  <div class="recs">
+    <h2>📋 Recomendações Prioritárias</h2>
+    <div class="recs-grid">
+      <div class="rec rec-r">🔴 <strong>Controle glicêmico rigoroso</strong> — TCF7L2, IRS1, KCNJ11 e IGF2BP2 elevam o risco de diabetes tipo 2; priorizar carboidratos de baixo índice glicêmico e atividade física.</div>
+      <div class="rec rec-r">🔴 <strong>Proteção do fígado</strong> — PNPLA3, PEMT e GCKR indicam risco de esteatose; reduzir álcool, frutose e garantir colina.</div>
+      <div class="rec rec-r">🔴 <strong>Monitorar pressão arterial</strong> — ACE, ATP2B1 e EDN1 predispõem à hipertensão; controle de sódio e magnésio adequado.</div>
+      <div class="rec rec-r">🔴 <strong>Peso e adiposidade</strong> — FTO, GNPDA2, UCP2 e MCP1 favorecem ganho de peso; o exercício atenua fortemente o FTO.</div>
+      <div class="rec rec-r">🔴 <strong>Perfil lipídico</strong> — ABCG5, HMGCR, LDLR e APOB elevam LDL; acompanhar lipidograma e ApoB.</div>
+      <div class="rec rec-a">🟡 <strong>Repor vitamina D</strong> — VDR, CYP2R1 e NADSYN1 reduzem síntese e resposta; dosar 25(OH)D e usar D3+K2.</div>
+      <div class="rec rec-a">🟡 <strong>Metilação e folato</strong> — MTHFR, MTRR, CBS e BHMT pedem folato ativo (metilfolato) e B12 ativa; monitorar homocisteína.</div>
+      <div class="rec rec-a">🟡 <strong>Vitamina A pré-formada</strong> — BCMO1/BCO1 reduzem a conversão de betacaroteno; incluir retinol.</div>
+      <div class="rec rec-a">🟡 <strong>Intolerância à lactose</strong> — MCM6 GG; preferir produtos sem lactose ou usar lactase.</div>
+      <div class="rec rec-a">🟡 <strong>Higiene do sono</strong> — CLOCK, CRY1/2 e MTNR1A/B favorecem dessincronia; rotina e luz natural pela manhã.</div>
+      <div class="rec rec-a">🟡 <strong>Suporte ao humor</strong> — MAOA, COMT e IL1B pedem atenção; B6, ômega-3 e manejo do estresse.</div>
+      <div class="rec rec-a">🟡 <strong>Antioxidação e detox</strong> — SOD2, GPX1, NQO1, GSTP1 e NAT2 reduzidos; crucíferas, NAC e CoQ10.</div>
+      <div class="rec rec-v">🟢 <strong>Proteção contra Alzheimer</strong> — APOE ε2/ε2, o genótipo mais protetor contra Alzheimer de início tardio.</div>
+      <div class="rec rec-v">🟢 <strong>Proteção cardiovascular</strong> — PCSK9 (perda de função) e PSRC1 reduzem LDL; HDL favorecido por CETP/LIPC/LPL.</div>
+      <div class="rec rec-v">🟢 <strong>Vitamina B12 favorável</strong> — FUT2 AA associa-se a bons níveis de B12.</div>
+      <div class="rec rec-v">🟢 <strong>Longevidade celular</strong> — FOXO3A e KLOTHO favoráveis reforçam a defesa antioxidante endógena.</div>
+    </div>
+  </div>
+
+  <div class="suplem">
+    <h2>💊 Suplementação Sugerida com Base no Perfil Genético</h2>
+    <p style="font-size:.8rem;color:var(--sub);margin-bottom:4px;">Doses e combinações devem ser ajustadas com profissional de saúde após exames laboratoriais. Esta seção é orientativa e baseada nos genes deste laudo.</p>
+    <h3>🔴 Prioridade Alta — Déficits Genéticos Críticos</h3>
+    <div class="suplem-grid">
+      <div class="sp sp-r"><strong>Vitamina D3 + K2 (MK-7)</strong><span class="dose">Genes: VDR, CYP2R1, NADSYN1 — menor síntese e resposta à vitamina D</span></div>
+      <div class="sp sp-r"><strong>Metilfolato (L-5-MTHF) + Metilcobalamina + B6 (P5P)</strong><span class="dose">Genes: MTHFR, MTRR, CBS, BHMT, NBPF3 — metilação comprometida (nunca ácido fólico)</span></div>
+      <div class="sp sp-r"><strong>Vitamina A (retinol pré-formado)</strong><span class="dose">Genes: BCMO1, BCO1 — conversão de betacaroteno reduzida</span></div>
+      <div class="sp sp-r"><strong>Berberina + Cromo picolinato</strong><span class="dose">Genes: TCF7L2, IRS1, ADIPOQ — ativa AMPK, apoia glicemia</span></div>
+      <div class="sp sp-r"><strong>Ômega-3 EPA+DHA pré-formado</strong><span class="dose">Genes: FADS1, IL6, MCP1, APOB — reduz inflamação e TG; menor conversão de ALA</span></div>
+      <div class="sp sp-r"><strong>Lactase (enzima)</strong><span class="dose">Gene: MCM6/LCT — degrada a lactose</span></div>
+    </div>
+    <h3>🟡 Prioridade Moderada — Suporte Metabólico</h3>
+    <div class="suplem-grid">
+      <div class="sp sp-a"><strong>Magnésio (glicinato/malato)</strong><span class="dose">Genes: ACE, COMT, HTR/humor, sono — pressão, estresse e relaxamento</span></div>
+      <div class="sp sp-a"><strong>CoQ10 (ubiquinol) + Manganês</strong><span class="dose">Gene: SOD2 — cofatores da defesa antioxidante mitocondrial</span></div>
+      <div class="sp sp-a"><strong>NAC + Glutationa lipossomal</strong><span class="dose">Genes: GSTP1, NQO1, EPHX1 — apoiam detox de fase II</span></div>
+      <div class="sp sp-a"><strong>Melatonina + Magnésio</strong><span class="dose">Genes: CLOCK, MTNR1A/B, PER2 — regulação circadiana</span></div>
+      <div class="sp sp-a"><strong>Colina</strong><span class="dose">Gene: PEMT — maior demanda para exportar gordura hepática</span></div>
+      <div class="sp sp-a"><strong>Selênio + Zinco</strong><span class="dose">Genes: GPX1, DIO2, SLC30A8 — antioxidação e tireoide/recuperação</span></div>
+      <div class="sp sp-a"><strong>Triptofano/5-HTP + B6 (P5P)</strong><span class="dose">Genes: MAOA, IL1B — suporte à serotonina</span></div>
+      <div class="sp sp-a"><strong>Molibdênio</strong><span class="dose">Gene: SUOX — cofator da sulfito oxidase</span></div>
+    </div>
+    <h3>🟢 Suporte Complementar — Proteção e Performance</h3>
+    <div class="suplem-grid">
+      <div class="sp sp-v"><strong>Colágeno hidrolisado + Vitamina C</strong><span class="dose">Genes: COL5A1, MMP12 — matriz de tendões/ligamentos e pele</span></div>
+      <div class="sp sp-v"><strong>Curcumina + Piperina</strong><span class="dose">Genes: IL6, MCP1, CCL2 — modulação anti-inflamatória</span></div>
+      <div class="sp sp-v"><strong>SAMe</strong><span class="dose">Gene: COMT — fornece grupos metil</span></div>
+      <div class="sp sp-v"><strong>Nitrato dietético (beterraba)</strong><span class="dose">Gene: NOS3 — potencializa óxido nítrico e resistência</span></div>
+      <div class="sp sp-v"><strong>Ferro (somente com ferritina &lt;30 confirmada)</strong><span class="dose">Genes: TMPRSS6, HFE — não suplementar empiricamente</span></div>
+      <div class="sp sp-v"><strong>Vitamina B12 (manutenção)</strong><span class="dose">Gene: FUT2 favorável — atenção se dieta vegetariana estrita</span></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="foot-title">👨‍⚕️ Dr. Ramon Nicotari</div>
+    <div class="foot-sub">Nutricionista · CRN3-31139</div>
+    <div class="foot-degs">
+      Pós-Graduação em Fitoterapia Clínica Integrativa<br>
+      Pós-Graduação em Terapia Nutricional e Nutrição Clínica<br>
+      Pós-Graduação em Nutrição Esportiva
+    </div>
+    <div class="foot-btns">
+      <a class="foot-btn" href="https://wa.me/5516997820822">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="#fff"/></svg>
+        +55 (16) 99782-0822
+      </a>
+      <a class="foot-btn" href="mailto:ramonnicotari@gmail.com">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="#fff"/></svg>
+        ramonnicotari@gmail.com
+      </a>
+      <a class="foot-btn" href="https://instagram.com/ramonnicotari">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="#fff"/></svg>
+        @ramonnicotari
+      </a>
+      <a class="foot-btn" href="https://www.ramonnicotari.com.br/">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm7.931 9h-2.764a14.67 14.67 0 00-1.792-6.243A8.013 8.013 0 0119.931 11zM12.53 4.027c1.035 1.364 2.427 3.78 2.627 6.973H9.03c.139-2.596.994-5.028 2.451-6.973h1.049zm-2.842.066A14.303 14.303 0 007.069 11H4.069a8.013 8.013 0 015.619-6.907zM4.069 13h3c.259 2.143 1.049 4.512 2.577 6.921A8.014 8.014 0 014.069 13zm8.432 6.944C10.981 18.546 9.944 16.02 9.53 13h5.201c-.351 2.755-1.318 5.086-2.23 6.944zm4.467-.026A14.652 14.652 0 0019.208 13h2.723a8.013 8.013 0 01-6.96 6.918z" fill="#fff"/></svg>
+        ramonnicotari.com.br
+      </a>
+    </div>
+    <div class="foot-disc">Este relatório integra dados dos laudos originais (Pedido 1695347) e não substitui orientação médica ou nutricional especializada. Paciente: Sandra Moreno Ceregatto.</div>
+  </div>
+
+  <script>
+    var _originals = {};
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.grid > .card').forEach(function(c) {
+        _originals[c.id] = c.innerHTML;
+      });
+    });
+
+    function norm(s) {
+      return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+    }
+
+    function buildFlexRx(q) {
+      var map = {
+        'a':'[aáàâãäå]','e':'[eéèêë]','i':'[iíìîï]',
+        'o':'[oóòôõö]','u':'[uúùûü]','c':'[cç]','n':'[nñ]','y':'[yý]'
+      };
+      var pattern = norm(q).split('').map(function(c) {
+        var esc = c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return map[c] ? map[c] : esc;
+      }).join('');
+      return new RegExp('(' + pattern + ')', 'gi');
+    }
+
+    function walkTextNodes(el, q) {
+      var re = buildFlexRx(q);
+      var nq = norm(q);
+      var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+      var nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      nodes.forEach(function(tn) {
+        if (!norm(tn.nodeValue).includes(nq)) return;
+        var span = document.createElement('span');
+        span.innerHTML = tn.nodeValue.replace(re, '<mark class="gene-highlight">$1</mark>');
+        tn.parentNode.replaceChild(span, tn);
+      });
+    }
+
+    var _activeFilters = new Set();
+
+    function _applyFilters() {
+      document.querySelectorAll('.grid > .card').forEach(function(c) {
+        if (_activeFilters.size === 0) {
+          c.classList.remove('hidden');
+        } else {
+          c.classList.toggle('hidden', !_activeFilters.has(c.id));
+        }
+      });
+    }
+
+    function filterCard(target, btn) {
+      clearSearch();
+      if (target === 'todos') {
+        _activeFilters.clear();
+        document.querySelectorAll('.ri').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        _applyFilters();
+        return;
+      }
+      var todosBtn = document.querySelector('.ri[onclick*="\'todos\'"]');
+      if (todosBtn) todosBtn.classList.remove('active');
+      if (_activeFilters.has(target)) {
+        _activeFilters.delete(target);
+        btn.classList.remove('active');
+        if (_activeFilters.size === 0 && todosBtn) todosBtn.classList.add('active');
+      } else {
+        _activeFilters.add(target);
+        btn.classList.add('active');
+      }
+      _applyFilters();
+    }
+
+    function searchCards(term) {
+      var clearBtn = document.getElementById('searchClear');
+      var countEl  = document.getElementById('searchCount');
+      var cards    = document.querySelectorAll('.grid > .card');
+      var q        = term.trim();
+      var ql       = norm(q);
+      cards.forEach(function(c) {
+        if (_originals[c.id]) c.innerHTML = _originals[c.id];
+      });
+      if (!q) {
+        clearBtn.style.display = 'none';
+        countEl.textContent = '';
+        _applyFilters();
+        return;
+      }
+      clearBtn.style.display = 'block';
+      var visible = 0;
+      cards.forEach(function(c) {
+        if (norm(c.textContent).indexOf(ql) === -1) {
+          c.classList.add('hidden');
+          return;
+        }
+        c.classList.remove('hidden');
+        visible++;
+        var matching = [], nonMatching = [];
+        c.querySelectorAll('details').forEach(function(d) {
+          if (norm(d.textContent).indexOf(ql) !== -1) {
+            matching.push(d);
+          } else {
+            nonMatching.push(d);
+          }
+        });
+        nonMatching.forEach(function(d) { d.style.display = 'none'; });
+        matching.forEach(function(d)    { d.setAttribute('open', ''); });
+        walkTextNodes(c, q);
+      });
+      countEl.textContent = visible === 0
+        ? 'Nenhum resultado'
+        : visible + ' área' + (visible > 1 ? 's' : '');
+    }
+
+    function clearSearch() {
+      var input = document.getElementById('searchInput');
+      if (input && input.value) { input.value = ''; searchCards(''); }
+    }
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js').catch(function(){});
+      });
+    }
+  </script>
+</body>
+</html>
